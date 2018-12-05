@@ -13,22 +13,30 @@
 # the userids and appltags using the queue.
 # For example on Linux
 # echo "dis QSTATUS(CP000*) type(handle) all" |runmqsc QMA |python appltag.py
-#
 # produces
 # (',q=CP0000,user=colinpaice,appltag=fromQMAJMS', 43)
 # (',q=CP0000,user=colinpaice,appltag=oemput', 1)
 # (',q=CP0002,user=colinpaice,appltag=COLINMDBCF', 36)
 # (',q=CP0002,user=colinpaice,appltag=oemput', 1)
 #
-#
+#  echo "dis conn(*) all  all "|runmqsc QMA |python appltag.py 
+# produces
+# (',user=colinpaice,appltag=COLINMDBCF', 98)
+# ...
+# (',user=colinpaice,appltag=fromQMAJMS', 52)
+# (',user=colinpaice,appltag=runmqchi', 1)
+# (',user=colinpaice,appltag=runmqsc', 1)
 
+#
+# The code for pid has been commented out, as with clients this is just an MQ
+# program.  So this is not very useful
 
 from sys import stdin
 data=dict();
-q="";
-u="";
-a="";
-p="";
+q=""; # queue name
+u=""; # userid
+a=""; # appl tag
+p=""; # pid 
 input = "";
 # we write out the data after we have processed the first record 
 doneFirst = False;
@@ -57,9 +65,10 @@ for line in stdin:
           q=",q="+ i.replace('(',' ').replace(')',' ').split()[1] ;
         if i.startswith("APPLTAG("):
           a=",appltag="+i.replace('(',' ').replace(')',' ').split()[1] ;
- #      if i.startswith("PID"):
- #        p=",pid="+i.replace('(',' ').replace(')',' ').split()[1] ;
-     #  We have parsed the data accumulate it in a dictionary
+     # if i.startswith("PID"):
+     # p=",pid="+i.replace('(',' ').replace(')',' ').split()[1] ;
+     # 
+     #  We have parsed the entities data, now accumulate it in a dictionary
      key = q + u + p + a;
      # if it exists increment it
      # else add it
