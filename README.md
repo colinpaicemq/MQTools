@@ -172,8 +172,8 @@ or
 
 You specify strings instead fo 
 
-appltag 
-=======
+## appltag 
+
 Use this python script to process the output from runmqsc DIS QSTATUS(queue) 
 to summarise the userids and appltags using the queue.
 
@@ -204,4 +204,5 @@ The code for processid id (pid) has been commented out, as with
 clients this is just an MQ
 program. This is not very useful
 
-
+## Credits
+Thanks to dsuch@zato.io for the pymqi, his guidance and assistance to me.
