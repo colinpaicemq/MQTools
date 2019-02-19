@@ -1,3 +1,9 @@
+#
+# constants generated from IBM MQ Header files
+# Contact ColinPaiceMQ@GMAIL.COM
+# Generated on Tue Feb 19 14:34:33 2019
+
+#
 sLookupTypes ={
   20:"MQQT" 
 , 134:"MQMON" 
@@ -27,6 +33,7 @@ sLookupTypes ={
 , 64:"MQIGQ" 
 , 78:"MQNPM" 
 , 1016:"MQOT" 
+, 1020:"MQRQ" 
 , 136:"MQMON" 
 , 239:"MQMON" 
 , 240:"MQMON" 

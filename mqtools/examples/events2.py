@@ -22,9 +22,9 @@ while True:
                print("difference",otype,oname,data2[otype],i,data1[i],data2[i]) 
    elif j["reason"] == "CONFIG_CREATE_OBJECT":
        #print line
-       print("Create",otype,oname,data1[otype])
+       print("Create",otype,data1[otype])
    else:
-     print("Delete",otype,oname,data1[otype])
+     print("Delete",otype,data1[otype])
  #     #    pass
  #  else: 
  #     pass

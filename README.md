@@ -9,7 +9,24 @@ response and store it in a dict.   This builds on top of pymqi.
 * **formatMQMD** for converting a MD from pymqi into a dict with values converted 
 to strings
 
-* Examples 
+* Examples.   The following are Python examples. 
+  * **get_pcf** - reads from the specified queue and outputs the data in json, so you can post process it.
+       ```
+      Input parameters:
+      -qm queue_manager_name
+       <-channel channel name>
+       <-conname 'ipaddress(1414)' >
+       <-userid  userid> 
+       <-password <Password_value> >  if password_value not specificied then it prompts
+       -queue   q_name  the name of the queue to be processed
+
+       Output:
+       json formatted output to stdout, which can be piped to other programs such as python3 pretty_json
+       ```
+
+      
+    * **pretty_json** - reads json stream and prints the data in a pretty format which is easy to use.  You use it
+      python3 get_pcf -qm ....  |python3 pretty_json 
   * **events** - uses mqpcf to read from the events queue and prints the data in json format.
     * **events2** pipe output from _python3 events.py |python3 events2_ produces summary 
       of the events such as 
