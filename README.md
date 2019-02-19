@@ -1,7 +1,23 @@
 # MQTools
 A repository of useful bits of Python code for processing IBM MQ.
 
-These build on the low level MQ services provided by pymqi.  
+These build on the low level MQ services provided by pymqi. 
+
+This code is alpha level - I have tested many areas - but there are going to be areas I havent covered,
+and Im still finding small problems with formatting etc.
+
+
+I would welcome suggestions, comments, and reports of bugs.  Please contact me at ColinPaiceMQ@GMAIL.COM
+or raise an issue on GitHub.
+
+If you want to install it use
+
+**pip3 -v  install   git+http://github.com/colinpaicemq/MQTools/** and it will install mqtools.
+ 
+ to uninstall it use
+ 
+ pip3 -v  uninstall mqtools
+
 
 These tools covers
 
