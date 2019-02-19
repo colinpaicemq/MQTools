@@ -1,0 +1,6 @@
+include mqtools/*
+include mqtools/example/*
+include mqtools/doc/*
+
+
+
