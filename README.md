@@ -19,6 +19,21 @@ to strings
        <-userid  userid> 
        <-password <Password_value> >  if password_value not specificied then it prompts
        -queue   q_name  the name of the queue to be processed
+       <-count n> the number of messages to process - useful while testing so you do not drain the queue.
+
+       SYSTEM.* queues include:  
+                    SYSTEM.ADMIN.ACCOUNTING.QUEUE, 
+                    SYSTEM.ADMIN.ACTIVITY.QUEUE, 
+                    SYSTEM.ADMIN.CHANNEL.EVENT, 
+                    SYSTEM.ADMIN.COMMAND.EVENT, 
+                    SYSTEM.ADMIN.CONFIG.EVENT, 
+                    SYSTEM.ADMIN.LOGGER.EVENT, 
+                    SYSTEM.ADMIN.PERFM.EVENT, 
+                    SYSTEM.ADMIN.PUBSUB.EVENT, 
+                    SYSTEM.ADMIN.QMGR.EVENT, 
+                    SYSTEM.ADMIN.STATISTICS.QUEUE, 
+                    SYSTEM.ADMIN.TRACE.ACTIVITY.QUEUE,
+                    SYSTEM.ADMIN.TRACE.ROUTE.QUEUE
 
        Output:
        json formatted output to stdout, which can be piped to other programs such as python3 pretty_json
