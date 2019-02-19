@@ -11,7 +11,7 @@ to strings
 
 * Examples 
   * **events** - uses mqpcf to read from the events queue and prints the data in json format.
-    * **events2** pipe output from python3 events.py |python3 events2 produces summary 
+    * **events2** pipe output from _python3 events.py |python3 events2_ produces summary 
       of the events such as 
       ```
        create Q_NAME DQUEUE DQUEUE
@@ -28,33 +28,33 @@ to strings
     in yaml format  
     * **diff** takes a list of *.yaml files (eg for queues) and compares the options
       so you can see what attributes are different.
-      * ./queues/CP0000.yml ./queues/CP0001.yml : Q_NAME CP0000 / CP0001
-      * ./queues/CP0000.yml ./queues/CP0001.yml : Q_DESC Main queue / 
-      * ./queues/CP0000.yml ./queues/CP0001.yml : MAX_Q_DEPTH 2000 / 5000
-      * ./queues/CP0000.yml ./queues/CP0001.yml : Q_DEPTH_HIGH_EVENT ENABLED / DISABLED
-
+      ```
+      ./queues/CP0000.yml ./queues/CP0001.yml : Q_NAME CP0000 / CP0001
+      ./queues/CP0000.yml ./queues/CP0001.yml : Q_DESC Main queue / 
+      ./queues/CP0000.yml ./queues/CP0001.yml : MAX_Q_DEPTH 2000 / 5000
+      ./queues/CP0000.yml ./queues/CP0001.yml : Q_DEPTH_HIGH_EVENT ENABLED / DISABLED
+      ```
     * **standards** reads the specified *.yaml files and checks the parameters to 
       ensure they meet the specified standards
-      * queues/CP00000.yml MAX_MSG_LENGTH 4000 Field in error.  It should be greater than 4194304
-      * queues/CP00000.yml MAX_Q_DEPTH 5000 Field in error.  It should be greater than 9999
-
+      ```
+      queues/CP00000.yml MAX_MSG_LENGTH 4000 Field in error.  It should be greater than 4194304
+      queues/CP00000.yml MAX_Q_DEPTH 5000 Field in error.  It should be greater than 9999
+      ```
 
   * **appltag**. This summarises the output of the dis qstatus(queue*) type(handle) and 
-    give a count of unique queue,  userid, applytag.
+     give a count of unique queue,  userid, applytag.
 
 
 # MQ PCF processor
 
-This code allows you to process a message in PCF format. 
+This code builds on pymqi  allows you to process a message in PCF format. 
 
-## Processing PCF data into a dict
+## Processing MQ PCF data into a dict
 
-
-It returns a list of dict with the data from
+You use pymqi to get data from an MQ Queue, then mqpcf can parse this data to create a 
+dict with the data from
 the different structures, and with internal numbers converted to strings 
 where applicable.
-
-You use pymqi to get a message, then you can use this code to process it.
 
 The output would be
 
@@ -63,8 +63,8 @@ The output would be
 ```
   {'Type': 'COMMAND', 
     'StrucLength': 36, 
-    'Version': 1, 'Command': 
-    'INQUIRE_CHLAUTH_RECS', 
+    'Version': 1, 
+    'Command':'INQUIRE_CHLAUTH_RECS', 
     'MsgSeqNumber': 1, 
     'Control': 'LAST', 
     'CompCode': 0, 
@@ -73,6 +73,10 @@ The output would be
    'sReason': 'NONE'
   }
 ```
+Where the mqpcf code has change the returned the command value of 204 to MQCMD_INQUIRE_CHLAUTH_RECS and 
+returned  "INQUIRE_CHLAUTH_RECS"
+ 
+*
 ### Data
 
 ```
@@ -87,6 +91,7 @@ The output would be
    'ALTERATION_TIME': '13.32.16'
   }
 ```
+Where the mqpcf code has changed the values returned in the message to "ADDRESSMAP" etc.
 
 This can process messages on from queues such as 
 SYSTEM.ADMIN.*.QUEUE and SYSTEM.ADMIN.*.EVENT.  See the code in the examples directory,
@@ -95,9 +100,9 @@ to do useful things with it.  See above
 
 
 
-Issuing PCF commands
+## Issuing PCF commands
 You can create a PCF message and then use pymqi to put it to the 
-SYSTEM.ADMIN.COMMAND.QUEUE
+SYSTEM.ADMIN.COMMAND.QUEUE for example
 
 ```
   message=pcfset.request(  "INQUIRE_CHLAUTH_RECS" 
@@ -113,6 +118,7 @@ or
                         )
 ```
 
+You specify strings instead fo 
 
 appltag 
 =======
