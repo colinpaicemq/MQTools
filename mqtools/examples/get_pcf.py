@@ -38,14 +38,26 @@ args = parser.parse_args()
 
 queue_name = 'SYSTEM.ADMIN.QMGR.EVENT'
 
-try:
-    if args.conname is None:
+
+if args.conname is None:
+    try:
         qmgr = pymqi.connect(args.qm)
-    elif userid == '': # non specified 
+    except  pymqi.MQMIError as e:
+        print("pymqi.MQMIError:",e)
+        print("pymqi.connect(qm)",args.gm)
+        raise
+elif userid == '': # non specified 
+    try:
         qmgr = pymqi.connect(args.qm,
                             args.channel,
                             args.conname)
-    else:
+    except  pymqi.MQMIError as e:
+        print("pymqi.MQMIError:",e)
+        print("pymqi.connect(qm,channel,conname)",
+              args.gm, args.channel, args.conname)
+        raise
+else:
+    try:
         password = args.password
         if password is None:
             password =  getpass.getpass()
@@ -54,10 +66,12 @@ try:
                             args.conname,
                             args.userid,
                             password)                   
+    except  pymqi.MQMIError as e:
+        print("pymqi.MQMIError: ",e)
+        print("pymqi.connect(qm,channel,conname,userid,password)",
+              args.gm, args.channel, args.conname, args.userid,"********")
+        raise
 
-except  pymqi.MQMIError as e:
-  print("pymqi.MQMIError: ",e)
-  raise
 mqpcf = MQPCF.mqpcf()
 # open the events queues
 queue = pymqi.Queue(qmgr, args.queue)
