@@ -4,22 +4,24 @@ A repository of useful bits of Python code for processing IBM MQ.
 These tools covers
 
 * **mqpcf** - MQ PCF Processor  for creating MQ PCF requests,  and a parser to decode the
-response and store it in a dict
+response and store it in a dict.   This builds on top of pymqi.
 
 * **formatMQMD** for converting a MD from pymqi into a dict with values converted 
 to strings
 
 * Examples 
-  * **events** - reads from the events queue and prints the data in json format.
+  * **events** - uses mqpcf to read from the events queue and prints the data in json format.
     * **events2** pipe output from python3 events.py |python3 events2 produces summary 
       of the events such as 
-      * create Q_NAME DQUEUE DQUEUE
-      * difference Q_NAME DQUEUE DQUEUE Q_DESC  newDesc 
-      * difference Q_NAME DQUEUE DQUEUE MAX_Q_DEPTH 5000 10
-      * Delete Q_NAME DQUEUE DQUEUE
-      * Create Q_NAME D2 D2
-      * difference Q_NAME D2 D2 MAX_Q_DEPTH 5000 40
-      * Delete CHANNEL_NAME CH1 CH1
+      ```
+       create Q_NAME DQUEUE DQUEUE
+       difference Q_NAME DQUEUE DQUEUE Q_DESC  newDesc 
+       difference Q_NAME DQUEUE DQUEUE MAX_Q_DEPTH 5000 10
+       Delete Q_NAME DQUEUE DQUEUE
+       Create Q_NAME D2 D2
+       difference Q_NAME D2 D2 MAX_Q_DEPTH 5000 40
+       Delete CHANNEL_NAME CH1 CH1
+       ```
   * **getqueues** connects to MQ, issues a PCF command to query queues and write
     json output to print
     * **getqueues2** takes the json output and writes it to files in the queues/ directory
@@ -33,18 +35,20 @@ to strings
 
     * **standards** reads the specified *.yaml files and checks the parameters to 
       ensure they meet the specified standards
+      * queues/CP00000.yml MAX_MSG_LENGTH 4000 Field in error.  It should be greater than 4194304
+      * queues/CP00000.yml MAX_Q_DEPTH 5000 Field in error.  It should be greater than 9999
+
 
   * **appltag**. This summarises the output of the dis qstatus(queue*) type(handle) and 
     give a count of unique queue,  userid, applytag.
 
 
-MQ PCF processor
-===============
+# MQ PCF processor
 
 This code allows you to process a message in PCF format. 
 
-Processing PCF data into a dict
-_______________________________
+## Processing PCF data into a dict
+
 
 It returns a list of dict with the data from
 the different structures, and with internal numbers converted to strings 
@@ -54,8 +58,8 @@ You use pymqi to get a message, then you can use this code to process it.
 
 The output would be
 
-Header
-_____
+### Header
+
 ```
   {'Type': 'COMMAND', 
     'StrucLength': 36, 
@@ -69,8 +73,8 @@ _____
    'sReason': 'NONE'
   }
 ```
-Data
-____
+### Data
+
 ```
   {'CHANNEL_NAME': 'SYSTEM.ADMIN.SVRCONN',
    'CHLAUTH_TYPE': 'ADDRESSMAP',
@@ -85,7 +89,9 @@ ____
 ```
 
 This can process messages on from queues such as 
-SYSTEM.ADMIN.*.QUEUE and SYSTEM.ADMIN.*.EVENT
+SYSTEM.ADMIN.*.QUEUE and SYSTEM.ADMIN.*.EVENT.  See the code in the examples directory,
+these produces json output which you can then pipe into other supplied samples
+to do useful things with it.  See above
 
 
 
