@@ -446,7 +446,15 @@ class mqpcfget(object):
 
 
 def _lookup_int_to_string(_value_type, value):
-    """ convert from number into string eg 0 is GET_DISABLED
+    """ 
+    convert from number into string eg 0 is GET_DISABLED
+    
+    We need to find out the prefix of the constants so look up the 
+    value_type.   20 maps to "MQQT" in sLookupTypes
+    
+    We can then look up MQQT and 2 via
+    MQQT_MODEL is  2, so so return MODEL
+    
     """
     _lookup_key = SMQPCF.sLookupTypes.get(_value_type)
     if _lookup_key is None:

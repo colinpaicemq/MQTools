@@ -10,11 +10,11 @@ class mqpcfset(object):
       default values may be overridden by the optional keyword arguments
       'kw'."""
 
-    def __init__(self):
+    def __init__(self,debug="no"):
         ##   super(MQPCF.MQPCF, self).__init__()
         self.trace = 0
         self.strip = "no"
-        self.debug = "no"
+        self.debug = debug
         self.all_data = []
         self.data_offset = 0
         self.structure_offset = 0
@@ -135,10 +135,11 @@ class mqpcfset(object):
                     bparms = b''.join([bparms, val])
                     iparms = iparms + 1
             else:
-                raise ValueError(
+                raise ValueError(        
                     "MQPCF parameters are in wrong format should be"
-                    "{ command : data } or command:(v1,v2) "
-                    , arg)
+                    "{ command : data } not {'command','data'}. Data is"
+                    , arg, "Check the : in between")
+                
         # print("----Type",type(user_command),type(iparms))
         # build the header, ( which includes the number of data sections, so we have to
         # do it after the data sections

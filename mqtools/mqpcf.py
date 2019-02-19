@@ -27,7 +27,8 @@ sLookupToI = {
 
 ,("MQACTP","FORWARD"): 1 
 ,("MQACTP","NEW"): 0 
-,("MQCA","APPL_DESC"): 3174 
+,("MQCA","APPL_DESC"): 3174  # strictly it is MQCACF_APPL_DESC
+                             # but this assumes you know it is for a Command 
 
 sLookupTypes ={
   20:"MQQT" 
@@ -65,8 +66,8 @@ class mqpcf(object):
     
     """
 
-    def __init__(self):
-        self.pcfset = mqpcfset.mqpcfset()        
+    def __init__(self,debug="no"):
+        self.pcfset = mqpcfset.mqpcfset(debug=debug)        
         self.pcfget = mqpcfget.mqpcfget()
        
     def create_request(self,request,*args):
