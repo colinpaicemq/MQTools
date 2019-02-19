@@ -56,7 +56,7 @@ The output would be
 
 Header
 _____
-::
+```
   {'Type': 'COMMAND', 
     'StrucLength': 36, 
     'Version': 1, 'Command': 
@@ -68,10 +68,10 @@ _____
     'ParameterCount': 1, 
    'sReason': 'NONE'
   }
-
+```
 Data
 ____
-::
+```
   {'CHANNEL_NAME': 'SYSTEM.ADMIN.SVRCONN',
    'CHLAUTH_TYPE': 'ADDRESSMAP',
    'CHLAUTH_DESC': 'Default rule to allow MQ Explorer access',
@@ -82,6 +82,7 @@ ____
    'ALTERATION_DATE': '2018-08-16',
    'ALTERATION_TIME': '13.32.16'
   }
+```
 
 This can process messages on from queues such as 
 SYSTEM.ADMIN.*.QUEUE and SYSTEM.ADMIN.*.EVENT
@@ -92,17 +93,19 @@ Issuing PCF commands
 You can create a PCF message and then use pymqi to put it to the 
 SYSTEM.ADMIN.COMMAND.QUEUE
 
-::
+```
   message=pcfset.request(  "INQUIRE_CHLAUTH_RECS" 
                           ,{"CHANNEL_NAME":"*"}                 
                         )
+```
 or
-::
+```
   message=pcfset.request("INQUIRE_Q_STATUS"
                          ,{"Q_NAME":"AMQ*"}
                          ,{"CURRENT_Q_DEPTH":("EQ",0)}
                          ,{"OPEN_TYPE":"INPUT"}                  
                         )
+```
 
 
 appltag 
@@ -115,22 +118,23 @@ For example on Linux
 echo "dis QSTATUS(CP000\*) type(handle) all" |runmqsc QMA |python appltag.py  
 
 produces
-::  
+```
     *(',q=CP0000,user=colinpaice,appltag=fromQMAJMS', 43)*  
     *(',q=CP0000,user=colinpaice,appltag=oemput', 1)*  
     *(',q=CP0002,user=colinpaice,appltag=COLINMDBCF', 36)*  
     *(',q=CP0002,user=colinpaice,appltag=oemput', 1)*  
+```
 
 echo "dis conn(\*) all  "|runmqsc QMA |python appltag.py   
 
 produces  
-::
+```
     *(',user=colinpaice,appltag=COLINMDBCF', 98)*  
     *...*  
     *(',user=colinpaice,appltag=fromQMAJMS', 52)*  
     *(',user=colinpaice,appltag=runmqchi', 1)*  
     *(',user=colinpaice,appltag=runmqsc', 1)*  
-
+```
 
 The code for processid id (pid) has been commented out, as with 
 clients this is just an MQ
