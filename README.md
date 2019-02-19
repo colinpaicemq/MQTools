@@ -1,13 +1,17 @@
 # MQTools
 A repository of useful bits of Python code for processing IBM MQ.
 
+These build on the low level MQ services provided by pymqi.  
+
 These tools covers
 
-* **mqpcf** - MQ PCF Processor  for creating MQ PCF requests,  and a parser to decode the
+* **mqpcf** - MQ PCF Processor for creating MQ PCF requests,  and a parser to decode the
 response and store it in a dict.   This builds on top of pymqi.
+    * A general purpose Python program get_pcf is provided in the examples so you can get the
+      messages, decode them, and print them - so you just need so write small programs to process it.
 
 * **formatMQMD** for converting a MD from pymqi into a dict with values converted 
-to strings
+  to strings.
 
 * Examples.   The following are Python examples. 
   * **get_pcf** - reads from the specified queue and outputs the data in json, so you can post process it.
