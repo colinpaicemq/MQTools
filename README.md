@@ -1,9 +1,39 @@
 # MQTools
-A repository of useful bits of code.
+A repository of useful bits of Python code for processing IBM MQ.
 
-1.MQ PCF Processor
+These tools covers
 
-2.appltag. This summarises the output of the dis qstatus(queue*) type(handle) and 
+* MQ PCF Processor - for creating MQ PCF requests,  and a parser to decode the
+response and store it in a dict
+
+* formatMQMD for converting a MD from pymqi into a dict with values converted 
+to strings
+
+* Examples 
+  * events - reads from the events queue and prints the data in json format.
+    * events2 pipe output from python3 events.py |python3 events2 produces summary 
+      of the events such as 
+      * create Q_NAME DQUEUE DQUEUE
+      * difference Q_NAME DQUEUE DQUEUE Q_DESC  newDesc 
+      * difference Q_NAME DQUEUE DQUEUE MAX_Q_DEPTH 5000 10
+      * Delete Q_NAME DQUEUE DQUEUE
+      * Create Q_NAME D2 D2
+      * difference Q_NAME D2 D2 MAX_Q_DEPTH 5000 40
+      * Delete Q_NAME D2 D2
+      * Create CHANNEL_NAME CH1 CH1
+      * difference CHANNEL_NAME CH1 CH1 XMIT_Q_NAME AA NOWBB
+      * Create Q_NAME DQUEUE DQUEUE
+      * difference Q_NAME DQUEUE DQUEUE Q_DESC  newDesc
+      * difference Q_NAME DQUEUE DQUEUE MAX_Q_DEPTH 5000 10
+      * difference CHANNEL_NAME CH1 CH1 ALTERATION_TIME 17.55.58 17.56.29
+      * difference CHANNEL_NAME CH1 CH1 ALTERATION_TIME 17.56.29 17.56.53
+      * Delete CHANNEL_NAME CH1 CH1
+  * getqueues connects to MQ, issues a PCF command to query queues and write
+    json output to print
+    getqueues2 takes the json output and writes it to files in the queues/ directory
+    in yaml format   
+
+3.appltag. This summarises the output of the dis qstatus(queue*) type(handle) and 
 give a count of unique queue,  userid, applytag.
 
 
