@@ -1,5 +1,6 @@
 import pymqi
 import mqtools.mqpcf as mqpcf
+import mqtools.MQ as MQ # for formatMQMD
 #import formatMQMD as formatMQMD
 import json
 
@@ -9,6 +10,7 @@ import sys
 queue_manager = 'QMA'
 channel = "QMACLIENT"
 conn_info = "127.0.0.1(1414)"
+queue_name = "CP*"
 
 pcf = mqpcf.mqpcf()
 
@@ -25,7 +27,7 @@ hAdmin = pcf.get_h_admin_queue(qmgr)
 hReply = pcf.get_h_reply_queue(qmgr)
 
 message= pcf.create_request("INQUIRE_Q"
-                            ,{"Q_NAME":"CP*"}
+                            ,{"Q_NAME":queue_name}
                            
                   
                    )
@@ -63,7 +65,7 @@ try:
         if header["Control"] == "LAST":
             md.set(MsgId=b'')
             md.set(CorrelId=b'')
-        newMD = mqpcf.format_MQMD(md)
+        newMD = MQ.format_MQMD(md)
         ret = {}  
         ret["header"]= header
         ret["data"] = data

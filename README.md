@@ -63,6 +63,8 @@ response and store it in a dict.   This builds on top of pymqi.
     * **pretty_json** - reads json stream and prints the data in a pretty format which is easy to use.  You use it
       python3 get_pcf -qm ....  |python3 pretty_json 
   * **events** - uses mqpcf to read from the events queue and prints the data in json format.
+    Copy the examples/event* to your current directory and change the queue manager information in 
+    events.py 
     * **events2** pipe output from _python3 events.py |python3 events2_ produces summary 
       of the events such as 
       ```
@@ -76,8 +78,11 @@ response and store it in a dict.   This builds on top of pymqi.
        ```
   * **getqueues** connects to MQ, issues a PCF command to query queues and write
     json output to print
-    * **getqueues2** takes the json output and writes it to files in the queues/ directory
-    in yaml format  
+    Copy the examples/getqueues*.py to your current directory and change the queue manager information in 
+    getqueues.py.  Change the queue_name to your queue name prefix of interest
+    * **getqueues2** takes the json output from getqueue and writes it to files in the queues/ directory
+    in yaml format.
+    Create a directory queues in your current directory
     * **diff** takes a list of *.yaml files (eg for queues) and compares the options
       so you can see what attributes are different.
       ```
@@ -205,4 +210,5 @@ clients this is just an MQ
 program. This is not very useful
 
 ## Credits
-Thanks to dsuch@zato.io for the pymqi, his guidance and assistance to me.
+Thanks to dsuch@zato.io for the pymqi, his guidance and assistance to me, and for coding techniques in
+ the pymqi code. 

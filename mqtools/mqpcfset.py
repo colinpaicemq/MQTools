@@ -89,6 +89,8 @@ class mqpcfset(object):
                             "MQPCF parameters are in wrong format "
                             "should be 'string' or integer"
                             , arg)
+                    if self.debug != "no":
+                        print("mqpcfset typeit arg",arg,"type",typeit,"value",arg_value )    
                     # Pass the type of data (MQIA, the code <for INQUIRE_Q> and value
                     # we can have {QNAME,("EQ","CP*"} - a filter
                     #  or {"QNAME","CP*} - if so treat this as above and insert "EQ"
@@ -303,6 +305,8 @@ class mqpcfset(object):
         return returned
 
     def _keyword_sub_value_to_int(self, code, value, arg):
+        if self.debug != "no":
+            print("_keyword_sub_value_to_int code=",code,"value=",value,"arg=",arg)
         val = value
         if isinstance(value, str):
             if code in SMQPCF.sLookupTypes: #coverrt  1023 to MQQSOT
@@ -311,9 +315,9 @@ class mqpcfset(object):
                 if tup in SMQPCF.sLookupToI:
                     val = SMQPCF.sLookupToI.get(tup)
                 else:
-                    raise ValueError("MQPCF parameter invalid", arg, value)
+                    raise ValueError("MQPCF parameter not found in sLookupToI ", vcode, value)
             else:
-                raise ValueError("MQPCF parameter invalid", arg, value)
+                raise ValueError("MQPCF parameter not found in sLookupTypes", code)
         return val
 
     def set_integer(self, code, operator, value, arg):

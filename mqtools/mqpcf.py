@@ -1,7 +1,7 @@
 import pymqi as pymqi
-from .  import smqpcf as SMQPCF
-from .  import mqpcfget as mqpcfget
-from . import  mqpcfset as mqpcfset
+from . import smqpcf as SMQPCF
+from . import mqpcfget as mqpcfget
+from . import mqpcfset as mqpcfset
 from sys import stderr
 import string
 
@@ -149,39 +149,7 @@ class mqpcf(object):
         md.Format = pymqi.CMQC.MQFMT_ADMIN
         return md    
         
-def format_MQMD(md):
-    """
-    format_MQMD(md) formats and MD replacing bytestrings with 0x0... if necessary
-    
-    We need to do this as json cannont handle \x00 etc in strings
-    """
-    
-    mdlist = {"Report":"MQRO",
-            "MsgType":"MQMT",
-            "Feedback":"MQFB",
-            "Persistence":"MQPER",
-            "PutApplType":"MQAT"
-    
-             }
-    newMD = md.get()
-    # print("newmd",newMD)
-    # convert integers to strings for those fields that need it
-    # as define above in mdlist
-    for l in mdlist:
-        newMD[l]= SMQPCF.sMQLOOKUP.get((mdlist[l], newMD[l]), newMD[l])
-    
-    printable_chars = set(bytes(string.printable, 'ascii'))
-    for x in newMD:
-        xx = newMD[x] # copy each field across
-        if isinstance(newMD[x],bytes):
-            z = bytearray(newMD[x])
-            # check to see if the whole string is printable 
-            printable = all(char in printable_chars for char in z)
-            if printable == True:
-                newMD[x] =xx.decode() # convert to string
-            else:
-                newMD[x] = "0x"+newMD[x].hex() # convert it to hex
-    return newMD    
+
     
 def lookup_reason(reason):
     """ Lookup reason code from number of string """

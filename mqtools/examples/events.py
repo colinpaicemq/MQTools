@@ -1,5 +1,6 @@
 import pymqi
 import mqtools.mqpcf as MQPCF
+import mqtools.MQ as MQ # for formatMQMD
 from ruamel.yaml import YAML
 import sys
 import json
@@ -42,7 +43,7 @@ try:
   #while True: 
     md1 = pymqi.MD()
     msg1 = ReplyQ.get(None,md1, gmo )
-    newMD1 = MQPCF.format_MQMD(md1)
+    newMD1 = MQ.format_MQMD(md1)
     header1, data1 =mqpcf.parse_data(buffer=msg1,strip="yes",debug="no")
     # ret= {"MQMD":newMD,"Header":header1,"Data":data1}
     if header1["sReason"] == "CONFIG_CHANGE_OBJECT" and header1["Control"] !=  "LAST":
@@ -56,7 +57,7 @@ try:
         msg2 = ReplyQ.get(None,md2, gmo)
         #MQPCF.eprint("msgid2:",md2.get())
         header2, data2 = mqpcf.parse_data(buffer=msg2,strip="yes",debug="no")
-        newMD2 = MQPCF.format_MQMD(md2)
+        newMD2 = MQ.format_MQMD(md2)
         ret= {"reason":header1["sReason"],
               "MQMD1":newMD1,
               "header1":header1,

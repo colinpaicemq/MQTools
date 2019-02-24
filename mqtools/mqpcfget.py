@@ -14,6 +14,7 @@
 """
 
 import struct
+import string
 import pymqi as pymqi
 from . import smqpcf as SMQPCF
 from . import mqpcf  as mqpcf
@@ -271,7 +272,20 @@ class mqpcfget(object):
         parameter = self._get4()
         string_length = self._get4()
         value = self.buffer[self.data_offset:self.data_offset+string_length]
-        #   no decode as it is already byte string
+        # if it is printable then covert to string else convert to 0x.... format
+        # so json can process it etc
+        printable_chars = set(bytes(string.printable, 'ascii'))
+        ba_value = bytearray(value)
+            # check to see if the whole string is printable 
+        printable = all(char in printable_chars for char in ba_value)
+        
+        if printable == True:
+                value  =value.decode() # convert to string
+                if strip != "no":
+                    value = value.rstrip()     
+        else:
+            value = "0x"+value.hex() # convert it to hex
+        
         if self.debug != "no":
             print("==ByteString data:", value)
         key = SMQPCF.sMQLOOKUP.get(("MQBA", parameter), parameter)
@@ -295,6 +309,7 @@ class mqpcfget(object):
 
         operator = SMQPCF.sMQLOOKUP.get(("MQCFOP", operator), operator)
         value = self.buffer[self.data_offset:self.data_offset + string_length]
+        
         # no decode as it is alread  byte string
         if self.debug != "no":
             print("==ByteString data:", value)
