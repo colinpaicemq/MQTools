@@ -60,12 +60,15 @@ response and store it in a dict.   This builds on top of pymqi.
        ```
 
       
-    * **pretty_json** - reads json stream and prints the data in a pretty format which is easy to use.  You use it
-      python3 get_pcf -qm ....  |python3 pretty_json 
+    * **pretty_json** - reads json stream and prints the data in a pretty format which is easy to use.  
+         You use it as follows.
+         
+         _python3 get_pcf -qm ....  |python3 pretty_json_ 
   * **events** - uses mqpcf to read from the events queue and prints the data in json format.
     Copy the examples/event* to your current directory and change the queue manager information in 
     events.py 
-    * **events2** pipe output from _python3 events.py |python3 events2_ produces summary 
+    * **events2**  takes the output from events and procesess a summary of the change events.
+      _python3 events.py |python3 events2_.   This produces summary 
       of the events such as 
       ```
        create Q_NAME DQUEUE DQUEUE
@@ -78,12 +81,14 @@ response and store it in a dict.   This builds on top of pymqi.
        ```
   * **getqueues** connects to MQ, issues a PCF command to query queues and write
     json output to print
+    
     Copy the examples/getqueues*.py to your current directory and change the queue manager information in 
     getqueues.py.  Change the queue_name to your queue name prefix of interest
+    
     * **getqueues2** takes the json output from getqueue and writes it to files in the queues/ directory
     in yaml format.
     Create a directory queues in your current directory
-    * **diff** takes a list of *.yaml files (eg for queues) and compares the options
+  * **diff** takes a list of *.yaml files (eg for queues) and compares the options
       so you can see what attributes are different.
       ```
       ./queues/CP0000.yml ./queues/CP0001.yml : Q_NAME CP0000 / CP0001
@@ -91,8 +96,11 @@ response and store it in a dict.   This builds on top of pymqi.
       ./queues/CP0000.yml ./queues/CP0001.yml : MAX_Q_DEPTH 2000 / 5000
       ./queues/CP0000.yml ./queues/CP0001.yml : Q_DEPTH_HIGH_EVENT ENABLED / DISABLED
       ```
-    * **standards** reads the specified *.yaml files and checks the parameters to 
-      ensure they meet the specified standards
+  * **standards** reads the specified *.yaml files and checks the parameters to 
+      ensure they meet the specified standards.
+      Copy the standards.py file from examples directory to your working directory, and change the 
+      parameters to match what you want to check.
+      You could create a yaml file with the parameters in it, and then use that.
       ```
       queues/CP00000.yml MAX_MSG_LENGTH 4000 Field in error.  It should be greater than 4194304
       queues/CP00000.yml MAX_Q_DEPTH 5000 Field in error.  It should be greater than 9999
