@@ -1,0 +1,7 @@
+This has been tested on Python 3.6, and should work on Python 3.x
+
+As this code is for IBM MQ, yu will most probably need pymqi to commuicate
+with your queue manager, and to get and put messages.
+
+If you use the examples these use json and yaml, and csv - but you can write 
+your own code to process the data.

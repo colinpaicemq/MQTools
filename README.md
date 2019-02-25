@@ -100,6 +100,22 @@ response and store it in a dict.   This builds on top of pymqi.
       ensure they meet the specified standards.
       Copy the standards.py file from examples directory to your working directory, and change the 
       parameters to match what you want to check.
+      
+      The supplied example has 
+      ignore = ["ALTERATION_DATE","ALTERATION_TIME","CREATION_DATE","CREATION_TIME"]
+
+      less_than = {"CURRENT_Q_DEPTH":50,
+                  }
+       
+      greater_than = {"MAX_MSG_LENGTH":4194304,
+                      "MAX_Q_DEPTH":9999,
+                     } 
+      
+      not_equal = {"INHIBIT_PUT":"PUT_ALLOWED",
+                  "INHIBIT_GET":"GET_ALLOWED",
+                  "SHAREABILITY":"SHAREABLE",
+                 }
+      
       You could create a yaml file with the parameters in it, and then use that.
       ```
       queues/CP00000.yml MAX_MSG_LENGTH 4000 Field in error.  It should be greater than 4194304
@@ -141,7 +157,6 @@ The output would be
 Where the mqpcf code has change the returned the command value of 204 to MQCMD_INQUIRE_CHLAUTH_RECS and 
 returned  "INQUIRE_CHLAUTH_RECS"
  
-*
 ### Data
 
 ```
@@ -183,7 +198,7 @@ or
                         )
 ```
 
-You specify strings instead fo 
+You specify strings instead of the cryptic constants 
 
 ## appltag 
 
