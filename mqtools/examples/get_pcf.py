@@ -27,6 +27,7 @@ import json
 import argparse
 import sys
 import getpass
+import mqtools.MQ as MQ # for formatMQMD
 
 valid_queues = ''.join(("Specify the queue to be processed.  System queues include:",
                     "SYSTEM.ADMIN.ACCOUNTING.QUEUE, ",
@@ -117,13 +118,13 @@ try:
    for i in range(args.count):
       md = pymqi.MD()
       msg = input_queue.get(None, md, gmo )
-      newMD = MQPCF.format_MQMD(md)
+      newMD = MQ.format_MQMD(md)
       header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug="no")
       ret= {"reason":header["sReason"],
-              "MQMD":newMD,
-              "header":header,
-              "data":data,
-              }
+            "MQMD":newMD,
+            "header":header,
+            "data":data,
+            }
    
       js = json.dumps(ret)
       print(js,flush=True) # needed so the next stage gets complete json

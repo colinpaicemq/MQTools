@@ -18,6 +18,7 @@ import string
 import pymqi as pymqi
 from . import smqpcf as SMQPCF
 from . import mqpcf  as mqpcf
+from sys import stderr
 
 
 class mqpcfget(object):
@@ -57,7 +58,7 @@ class mqpcfget(object):
         self.structure_offset = 0
         self.buffer = b""
         self.buffer_length = 0
-        self.struc_length = 0
+        self.structure_length = 0
 
     def _parse_data(self, buffer='', strip="no", debug="no"):
         """
@@ -112,7 +113,7 @@ class mqpcfget(object):
         #-2 is special code for Control
         header["CompCode"] = mqpcf.lookup_reason(header["CompCode"])
         header["sReason"] = SMQPCF.sMQLOOKUP.get(("MQRC", header["Reason"]), header["Reason"])
-        self.struc_length = header['StrucLength']
+        self.structure_length = header['StrucLength']
 #        print("Header:", header)
         self._move_to_next_structure()
         return header
@@ -143,10 +144,22 @@ class mqpcfget(object):
         returned = {}
         while i < count:   # passed count
             section_type = self._get4()
-            section_length = self._get4()
-            self.struc_length = section_length
-            if self.structure_offset + self.struc_length > self.buffer_length:
-                raise ValueError("MQPCF buffer too short: ")
+            self.structure_length = self._get4()
+            if self.debug != "no":
+                print("mqpcfget dump: old length:",self.structure_length,
+                      "old offset:",self.structure_offset,
+                      file=stderr)
+                print(self.buffer[self.structure_offset:self.structure_offset+16].hex(),file=stderr)
+                print(self.buffer[self.structure_offset+16:self.structure_offset+32].hex(),file=stderr)
+                print(self.buffer[self.structure_offset+32:self.structure_offset+48].hex(),file=stderr)
+                print(self.buffer[self.structure_offset+48:self.structure_offset+64].hex(),file=stderr)
+            if self.debug != "no":
+                print("mqpcfget: type:", section_type,"length:", self.structure_length,
+                      "offset:", self.structure_offset,
+                      "buffer length:", self.buffer_length,
+                      file=stderr)
+            if self.structure_offset + self.structure_length > self.buffer_length:
+                raise ValueError("MQPCF buffer too short: Structure length",self.structure_length)
             if section_type == pymqi.CMQCFC.MQCFT_STRING:
                 data, value, longdata = self._get_string()
             elif section_type == pymqi.CMQCFC.MQCFT_STRING_LIST:
@@ -180,6 +193,11 @@ class mqpcfget(object):
             # elif section_type == pymqi.CMQCFC.MQCFT_INTEGER6
             returned[data] = value
             self.all_data.append(longdata)
+            if self.debug != "no":
+                print(">>mqpcfget: moveto type:", section_type,"length:", self.structure_length,
+                      "offset:", self.structure_offset,
+                      "buffer length:", self.buffer_length,
+                      file=stderr)
             self._move_to_next_structure()
             i = i+1
         return returned
@@ -194,6 +212,7 @@ class mqpcfget(object):
         parameter = self._get4()
         parameter_count = self._get4()
         # a group is a section of common records so we call the parser recursively
+        #print("==GROUP",parameter,parameter_count)
         group_data = self._parse_detail(offset=self.data_offset, count=parameter_count)
         key = SMQPCF.sMQLOOKUP.get(("MQGA", parameter), parameter)
         data = {"Type":"MQCFT_Group",
@@ -406,9 +425,17 @@ class mqpcfget(object):
 
         We have the start of the structure, and its total length
         so move the points to the end of this one- ( and start of the
-        next one - of any)
+        next one - if any)
         """
-        self.structure_offset = self.structure_offset + self.struc_length # move to next structure
+        if self.debug != "no":
+            print("mqpcfget: old length:",self.structure_length,
+                      "old offset:",self.structure_offset,
+                      file=stderr)
+            print(self.buffer[self.structure_offset:self.structure_offset+16].hex(),file=stderr)
+            print(self.buffer[self.structure_offset+16:self.structure_offset+32].hex(),file=stderr)
+            print(self.buffer[self.structure_offset+32:self.structure_offset+48].hex(),file=stderr)
+            print(self.buffer[self.structure_offset+48:self.structure_offset+64].hex(),file=stderr)
+        self.structure_offset = self.structure_offset + self.structure_length # move to next structure
         self.data_offset = self.structure_offset # reset the start of the data
         return
 

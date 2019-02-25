@@ -1,14 +1,14 @@
 # MQTools
 A repository of useful bits of Python code for processing IBM MQ.
 
-These build on the low level MQ services provided by pymqi. 
+These build on the low level MQ services provided by [pymqi](https://dsuch.github.io/pymqi/). 
 
 This code is alpha level - I have tested many areas - but there are going to be areas I havent covered,
-and Im still finding small problems with formatting etc.
+and I am still finding small problems with formatting etc.
 
 
 I would welcome suggestions, comments, and reports of bugs.  Please contact me at ColinPaiceMQ@GMAIL.COM
-or raise an issue on GitHub.
+or raise an issue on [MQTools GitHub](https://github.com/colinpaicemq/MQTools).
 
 If you want to install it use
 
