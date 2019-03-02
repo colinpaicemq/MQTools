@@ -48,11 +48,11 @@ class mqpcfget(object):
         #      print("command is instance list...", isinstance(v,list))
     """
 
-    def __init__(self):
+    def __init__(self,debug=0):
         ## super(MQPCF.MQPCF, self).__init__()
         self.trace = 0
         self.strip = "no"
-        self.debug = "no"
+        self.debug = debug
         self.all_data = []
         self.data_offset = 0
         self.structure_offset = 0
@@ -104,7 +104,12 @@ class mqpcfget(object):
                        ['Reason', pymqi.CMQC.MQRC_NONE, pymqi.MQLONG_TYPE],
                        ["ParameterCount", 0, pymqi.MQLONG_TYPE]
                       ]
+       
         header = self._unpack(tuple(header_opts)) # build the structure from the data
+        if self.debug > 1:
+            print("Header:type", header["Type"],
+                  "Command:", header["Command"],
+                  "Reason:", header["Reason"]) 
         # Convert the integer values to text values
         header["Type"] = SMQPCF.sMQLOOKUP.get(("MQCFT", header["Type"]), header["Type"])
         header["Command"] = SMQPCF.sMQLOOKUP.get(("MQCMD", header["Command"]), header["Command"])
@@ -145,7 +150,7 @@ class mqpcfget(object):
         while i < count:   # passed count
             section_type = self._get4()
             self.structure_length = self._get4()
-            if self.debug > 0 :
+            if self.debug > 5 :
                 print("mqpcfget dump: old length:",self.structure_length,
                       "old offset:",self.structure_offset,
                       file=stderr)
@@ -153,7 +158,7 @@ class mqpcfget(object):
                 print(self.buffer[self.structure_offset+16:self.structure_offset+32].hex(),file=stderr)
                 print(self.buffer[self.structure_offset+32:self.structure_offset+48].hex(),file=stderr)
                 print(self.buffer[self.structure_offset+48:self.structure_offset+64].hex(),file=stderr)
-            if self.debug > 0 :
+            if self.debug > 2 :
                 print("mqpcfget: type:", section_type,"length:", self.structure_length,
                       "offset:", self.structure_offset,
                       "buffer length:", self.buffer_length,
@@ -186,14 +191,14 @@ class mqpcfget(object):
                 raise ValueError("MQPCF Unsupported parameter:"
                                  , section_type)
             if self.debug > 0 :
-                print("element:", i, data)
+                print("element:", i, data,"value:",value)
             #  MQPCF.eprint("___Type",section_type,data,value)
             #    elif section_type == pymqi.CMQCFC.MQCFT_GROUP:
             #    data, value, longdata = self._get_group()
             # elif section_type == pymqi.CMQCFC.MQCFT_INTEGER6
             returned[data] = value
             self.all_data.append(longdata)
-            if self.debug > 0 :
+            if self.debug > 5 :
                 print(">>mqpcfget: moveto type:", section_type,"length:", self.structure_length,
                       "offset:", self.structure_offset,
                       "buffer length:", self.buffer_length,
@@ -427,7 +432,7 @@ class mqpcfget(object):
         so move the points to the end of this one- ( and start of the
         next one - if any)
         """
-        if self.debug > 0 :
+        if self.debug > 5 :
             print("mqpcfget: old length:",self.structure_length,
                       "old offset:",self.structure_offset,
                       file=stderr)
