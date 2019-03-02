@@ -10,7 +10,7 @@ class mqpcfset(object):
       default values may be overridden by the optional keyword arguments
       'kw'."""
 
-    def __init__(self,debug="no"):
+    def __init__(self,debug=0):
         ##   super(MQPCF.MQPCF, self).__init__()
         self.trace = 0
         self.strip = "no"
@@ -34,7 +34,7 @@ class mqpcfset(object):
         which are not.. have "eq" added to make it a filter
         We provide a list of names- where the count may be just one element
         """
-        if self.debug != "no":
+        if self.debug > 0 :
             print("command", request, args)
         user_command = request
         if not isinstance(request, int):
@@ -89,7 +89,7 @@ class mqpcfset(object):
                             "MQPCF parameters are in wrong format "
                             "should be 'string' or integer"
                             , arg)
-                    if self.debug != "no":
+                    if self.debug > 0 :
                         print("mqpcfset typeit arg",arg,"type",typeit,"value",arg_value )    
                     # Pass the type of data (MQIA, the code <for INQUIRE_Q> and value
                     # we can have {QNAME,("EQ","CP*"} - a filter
@@ -149,7 +149,7 @@ class mqpcfset(object):
 
     def _parse_data_type(self, k):
         """ Process the command """
-        if self.debug != "no":
+        if self.debug > 0 :
             print("_parse_data_type", k)
         # the dict has  "ACCOUNTING_TOKEN": ("MQBACF",7010),
         # so look for the first word.. ACCOUNTING_TOKEN and return "MQBACF",7010
@@ -159,7 +159,7 @@ class mqpcfset(object):
             # else:  raise ValueError("MQPCF parameters in wrong format. ",k, v )
             else:
                 raise ValueError("MQPCF parameters not found: ", k)
-        if self.debug != "no":
+        if self.debug > 0 :
             print("input is", k, "type is", data_type, " key is ", key_value)
         return data_type, key_value
 
@@ -305,7 +305,7 @@ class mqpcfset(object):
         return returned
 
     def _keyword_sub_value_to_int(self, code, value, arg):
-        if self.debug != "no":
+        if self.debug > 0 :
             print("_keyword_sub_value_to_int code=",code,"value=",value,"arg=",arg)
         val = value
         if isinstance(value, str):

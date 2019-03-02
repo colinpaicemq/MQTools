@@ -32,7 +32,7 @@ message= pcf.create_request("INQUIRE_Q"
                   
                    )
 # to check what was sent - decode the string
-# header, data =mqpcf.parseData(buffer=message,strip="no",debug="no")
+# header, data =mqpcf.parseData(buffer=message,strip="no",debug=0 )
 
 # Prepare a Message Descriptor for the request message.
 # Set the required fields
@@ -57,7 +57,7 @@ try:
     while True:
         data = hReply.get(None,md, gmo )
         md.set(MsgId=b'') # clear this so we get rest of messages in group
-        header, data = pcf.parse_data(buffer=data, strip="yes", debug="no")
+        header, data = pcf.parse_data(buffer=data, strip="yes", debug=0)
         if (header["Reason"] != 0):
             mqpcf.eprint("Reason code:",pcf.header["sReason"])
             mqpcf.eprint("error return:",header)

@@ -33,7 +33,7 @@ class mqpcfget(object):
 
     def _parse_data_type(self, k):
         #  Process the command
-        if self.debug != "no":
+        if self.debug > 0 :
             print("_parse_data_type", k)
         if isinstance(k, str):
             print("K=", k)
@@ -41,7 +41,7 @@ class mqpcfget(object):
    #      else:  raise ValueError("MQPCF parameters in wrong format. ",k, v )
             if key_value is None:
                 raise ValueError("MQPCF parameters not found: ", k)
-        if self.debug != "no":
+        if self.debug > 0 :
             print("input is", k, "type is", data_type, " key is ", key_value)
         return data_type, key_value
         # we have a valid data type
@@ -60,7 +60,7 @@ class mqpcfget(object):
         self.buffer_length = 0
         self.structure_length = 0
 
-    def _parse_data(self, buffer='', strip="no", debug="no"):
+    def _parse_data(self, buffer='', strip="no", debug=0):
         """
         Parse the data into the a dictionary of component
 
@@ -145,7 +145,7 @@ class mqpcfget(object):
         while i < count:   # passed count
             section_type = self._get4()
             self.structure_length = self._get4()
-            if self.debug != "no":
+            if self.debug > 0 :
                 print("mqpcfget dump: old length:",self.structure_length,
                       "old offset:",self.structure_offset,
                       file=stderr)
@@ -153,7 +153,7 @@ class mqpcfget(object):
                 print(self.buffer[self.structure_offset+16:self.structure_offset+32].hex(),file=stderr)
                 print(self.buffer[self.structure_offset+32:self.structure_offset+48].hex(),file=stderr)
                 print(self.buffer[self.structure_offset+48:self.structure_offset+64].hex(),file=stderr)
-            if self.debug != "no":
+            if self.debug > 0 :
                 print("mqpcfget: type:", section_type,"length:", self.structure_length,
                       "offset:", self.structure_offset,
                       "buffer length:", self.buffer_length,
@@ -185,7 +185,7 @@ class mqpcfget(object):
             else:
                 raise ValueError("MQPCF Unsupported parameter:"
                                  , section_type)
-            if self.debug != "no":
+            if self.debug > 0 :
                 print("element:", i, data)
             #  MQPCF.eprint("___Type",section_type,data,value)
             #    elif section_type == pymqi.CMQCFC.MQCFT_GROUP:
@@ -193,7 +193,7 @@ class mqpcfget(object):
             # elif section_type == pymqi.CMQCFC.MQCFT_INTEGER6
             returned[data] = value
             self.all_data.append(longdata)
-            if self.debug != "no":
+            if self.debug > 0 :
                 print(">>mqpcfget: moveto type:", section_type,"length:", self.structure_length,
                       "offset:", self.structure_offset,
                       "buffer length:", self.buffer_length,
@@ -235,7 +235,7 @@ class mqpcfget(object):
                 "Parameter":key,
                 "Type":"MQCFT_STRING",
                 "string_length":string_length}
-        if self.debug != "no":
+        if self.debug > 0 :
             print("==String data:", data)
         return key, value, data
 
@@ -305,7 +305,7 @@ class mqpcfget(object):
         else:
             value = "0x"+value.hex() # convert it to hex
         
-        if self.debug != "no":
+        if self.debug > 0 :
             print("==ByteString data:", value)
         key = SMQPCF.sMQLOOKUP.get(("MQBA", parameter), parameter)
         data = {"Type":"MQCFT_BYTE_STRING",
@@ -330,7 +330,7 @@ class mqpcfget(object):
         value = self.buffer[self.data_offset:self.data_offset + string_length]
         
         # no decode as it is alread  byte string
-        if self.debug != "no":
+        if self.debug > 0 :
             print("==ByteString data:", value)
         key = SMQPCF.sMQLOOKUP.get(("MQBA", parameter), parameter)
         data = {"Operator":operator,
@@ -427,7 +427,7 @@ class mqpcfget(object):
         so move the points to the end of this one- ( and start of the
         next one - if any)
         """
-        if self.debug != "no":
+        if self.debug > 0 :
             print("mqpcfget: old length:",self.structure_length,
                       "old offset:",self.structure_offset,
                       file=stderr)

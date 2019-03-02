@@ -1,7 +1,7 @@
 import mqtools.smqpcf as SMQPCF
 import json
 import string
-def format_MQMD(md,strip="yes", debug="no"):
+def format_MQMD(md,strip="yes", debug=0):
     """
     format_MQMD(md) formats and MD replacing bytestrings with 0x0... if necessary
     
@@ -15,7 +15,7 @@ def format_MQMD(md,strip="yes", debug="no"):
             "PutApplType":"MQAT"
     
              }
-    if debug != "no":
+    if debug > 0:
         print("formatMQMD:strip=",strip)
     newMD = md.get()
     # print("newmd",newMD)
@@ -27,13 +27,13 @@ def format_MQMD(md,strip="yes", debug="no"):
     printable_chars = set(bytes(string.printable, 'ascii'))
     for x in newMD:
         xx = newMD[x] # copy each field across
-        if debug != "no":
+        if debug > 0:
                print("formatMQMD:",x,xx,type(xx)) 
         if isinstance(newMD[x],bytes):
             z = bytearray(newMD[x])
             # check to see if the whole string is printable 
             printable = all(char in printable_chars for char in z)
-            if debug != "no":
+            if debug > 0:
                print("formatMQMD:Printable",printable) 
             if printable == True:
                 newMD[x] =xx.decode() # convert to string
@@ -45,7 +45,7 @@ def format_MQMD(md,strip="yes", debug="no"):
             pass        
     return newMD    
 
-def oldformat_MQMD(md, strip="yes", debug="no"):
+def oldformat_MQMD(md, strip="yes", debug=0):
     mdlist = {"Report":"MQRO",
             "MsgType":"MQMT",
             "Feedback":"MQFB",
@@ -56,14 +56,14 @@ def oldformat_MQMD(md, strip="yes", debug="no"):
     newMD = md.get()
     # print("newmd",newMD)
     print("DEBUG",debug)
-    if debug != "no":
+    if debug > 0:
          print("formatMQMD strip:",strip)
     for l in mdlist:
         newMD[l]= SMQPCF.sMQLOOKUP.get((mdlist[l], newMD[l]), newMD[l])
     printable_chars = set(bytes(string.printable, 'ascii'))
     for x in newMD:
         xx = newMD[x]
-        if debug != "no":
+        if debug > 0:
            print("formatMQMD:",x,xx,type(xx))   
         if isinstance(newMD[x],bytes):
             z = bytearray(newMD[x])

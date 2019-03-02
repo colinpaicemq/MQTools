@@ -8,6 +8,7 @@ Input parameters:
 <-userid  userid> 
 <-password <Password_value> >  if password_value not specificied then it prompts
 -queue   q_name  the name of the queue to be processed
+< -debug n value from 0 to 9 
 
 Output:
 json formatted output to stdout, which can be piped to other programs such as python3 pretty_json
@@ -51,6 +52,8 @@ parser.add_argument('-userid', required=False, default=None)
 parser.add_argument('-password', required=False, default=None)
 parser.add_argument('-count', required=False, default=999999,type=int,
                     help="count of messages to process")
+parser.add_argument('-debug', required=False, default=0,type=int,
+                    help="For internal debugging")
 args = parser.parse_args()
 
 if args.queue == "?":
@@ -119,7 +122,7 @@ try:
       md = pymqi.MD()
       msg = input_queue.get(None, md, gmo )
       newMD = MQ.format_MQMD(md)
-      header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug="no")
+      header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug=args.debug)
       ret= {"reason":header["sReason"],
             "MQMD":newMD,
             "header":header,

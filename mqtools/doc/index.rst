@@ -97,7 +97,7 @@ use PyMQI to get a message from the queue
 
 process it
 
-    header, data =pcfget.parseData(buffer=data,strip="yes",debug="no")
+    header, data =pcfget.parseData(buffer=data,strip="yes",debug=0)
 
     print("Header:", header)
     print("Data:", data)

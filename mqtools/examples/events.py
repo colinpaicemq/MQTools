@@ -44,7 +44,7 @@ try:
     md1 = pymqi.MD()
     msg1 = ReplyQ.get(None,md1, gmo )
     newMD1 = MQ.format_MQMD(md1)
-    header1, data1 =mqpcf.parse_data(buffer=msg1,strip="yes",debug="no")
+    header1, data1 =mqpcf.parse_data(buffer=msg1,strip="yes",debug=0 )
     # ret= {"MQMD":newMD,"Header":header1,"Data":data1}
     if header1["sReason"] == "CONFIG_CHANGE_OBJECT" and header1["Control"] !=  "LAST":
         # we need to get the second message
@@ -56,7 +56,7 @@ try:
         # md2.set(MsgId=b'')        
         msg2 = ReplyQ.get(None,md2, gmo)
         #MQPCF.eprint("msgid2:",md2.get())
-        header2, data2 = mqpcf.parse_data(buffer=msg2,strip="yes",debug="no")
+        header2, data2 = mqpcf.parse_data(buffer=msg2,strip="yes",debug=0)
         newMD2 = MQ.format_MQMD(md2)
         ret= {"reason":header1["sReason"],
               "MQMD1":newMD1,
@@ -83,7 +83,7 @@ try:
     #correlid1=md1["CorrelId"]
     #correlid2=md2["CorrelId"]
     #if (correlid1 != correlid2): print("Correlid do not match")
-    #header2, data2 = mqpcf.parse_data(buffer=msg2,strip="yes",debug="no")
+    #header2, data2 = mqpcf.parse_data(buffer=msg2,strip="yes",debug=0 )
     #if (header2["Reason"] != 0):
     #   MQPCF.eprint("Reason code:",header2["sReason"])
     #   MQPCF.eprint("error return:",header2)    

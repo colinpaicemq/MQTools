@@ -66,7 +66,7 @@ class mqpcf(object):
     
     """
 
-    def __init__(self,debug="no"):
+    def __init__(self,debug = 0):
         self.pcfset = mqpcfset.mqpcfset(debug=debug)        
         self.pcfget = mqpcfget.mqpcfget()
        
@@ -75,7 +75,7 @@ class mqpcf(object):
         ret= self.pcfset.create_request(request, *args)   
         return ret
     
-    def parse_data(self, buffer='', strip="no", debug="no"):
+    def parse_data(self, buffer='', strip="no", debug= 0):
         """ Call the MQPCFGET to do the work"""
         ret = self.pcfget._parse_data(buffer, strip, debug)
         return ret
