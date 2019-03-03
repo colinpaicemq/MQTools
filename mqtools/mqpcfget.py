@@ -151,8 +151,8 @@ class mqpcfget(object):
             section_type = self._get4()
             self.structure_length = self._get4()
             if self.debug > 5 :
-                print("mqpcfget dump: old length:",self.structure_length,
-                      "old offset:",self.structure_offset,
+                print("mqpcfget dump 153: length:",self.structure_length,
+                      "offset:",self.structure_offset,
                       file=stderr)
                 print(self.buffer[self.structure_offset:self.structure_offset+16].hex(),file=stderr)
                 print(self.buffer[self.structure_offset+16:self.structure_offset+32].hex(),file=stderr)
@@ -199,7 +199,7 @@ class mqpcfget(object):
             returned[data] = value
             self.all_data.append(longdata)
             if self.debug > 5 :
-                print(">>mqpcfget: moveto type:", section_type,"length:", self.structure_length,
+                print(">>mqpcfget: 202 moveto type:", section_type,"length:", self.structure_length,
                       "offset:", self.structure_offset,
                       "buffer length:", self.buffer_length,
                       file=stderr)
@@ -217,9 +217,12 @@ class mqpcfget(object):
         parameter = self._get4()
         parameter_count = self._get4()
         # a group is a section of common records so we call the parser recursively
+        
         #print("==GROUP",parameter,parameter_count)
         group_data = self._parse_detail(offset=self.data_offset, count=parameter_count)
         key = SMQPCF.sMQLOOKUP.get(("MQGA", parameter), parameter)
+        if self.debug > 5 :
+            print("_get_group",key)
         data = {"Type":"MQCFT_Group",
                 "Parameter":parameter,
                 "ParameterCount":parameter_count,
@@ -263,6 +266,8 @@ class mqpcfget(object):
         if self.strip != "no":
             value = value.rstrip()
         key = SMQPCF.sMQLOOKUP.get(("MQCA", parameter), parameter)
+        if self.debug > 5 :
+            print("_get_string_filter",key)
         data = {"Operator":operator,
                 "Type":"MQCFT_STRING_FILTER",
                 "Parameter":key,
@@ -283,6 +288,8 @@ class mqpcfget(object):
             slist.append(sdata)
             self.data_offset = self.data_offset+string_length
         key = SMQPCF.sMQLOOKUP.get(("MQCA", parameter), parameter)
+        if self.debug > 5 :
+            print("_get_string_list",key)
         value = slist
         data = {"Type":"MQCFT_STRING",
                 "Parameter":key,
@@ -310,9 +317,10 @@ class mqpcfget(object):
         else:
             value = "0x"+value.hex() # convert it to hex
         
-        if self.debug > 0 :
-            print("==ByteString data:", value)
+        
         key = SMQPCF.sMQLOOKUP.get(("MQBA", parameter), parameter)
+        if self.debug > 0 :
+            print("==ByteString data:", value,key)
         data = {"Type":"MQCFT_BYTE_STRING",
                 "Parameter":key,
                 "Value":value}
@@ -353,7 +361,13 @@ class mqpcfget(object):
         value = self._get4()
         key = SMQPCF.sMQLOOKUP.get(("MQIA", parameter), parameter)
         # decode a value... eg 7 is CLNTCONN for a channel
+        old_value = value
         value = _lookup_int_to_string(parameter, value)
+        if self.debug > 0 :
+            print("==_get_integer parameter:", parameter,
+                  "value:",old_value,
+                  "key:",key,
+                  "new value:",value) 
         data = {"Value":value,
                 "Type":"MQCFT_INTEGER",
                 "Parameter":key}
@@ -388,7 +402,11 @@ class mqpcfget(object):
             integer_list.append(value)
             i = i + 1
         key = SMQPCF.sMQLOOKUP.get(("MQIA", parameter), parameter)
+        
         value = integer_list
+        if self.debug > 0 :
+            print("==_get_integer_list parameter:", parameter,                 
+                  "key:",key) 
         data = {"Type":"MQCFT_INTEGER_LIST",
                 "Parameter":key,
                 "Value":value}
@@ -401,6 +419,16 @@ class mqpcfget(object):
         value = self._get8()
         key = SMQPCF.sMQLOOKUP.get(("MQIA", parameter), parameter)
         # value = self._lookup_int_to_string(parameter, value) # not for 64 bits
+        if self.debug > 0 :
+            pass
+        print("==_get_integer64 parameter:", parameter,
+                  "value:",value,
+                  "key:",key,
+                 ) 
+        if self.debug > 0 :
+            print("==_get_integer_64 parameter:", parameter,
+                  "key:",key,
+                  "new value:",value) 
         data = {"Value":value,
                 "Type":"MQCFT_INTEGER64",
                 "Parameter":key}
@@ -418,6 +446,9 @@ class mqpcfget(object):
             value = self._get8()
             integer_list.append(value)
             i = i + 1
+        if self.debug > 0 :
+            print("==_get_integer_64_list parameter:", parameter,
+                  "key:",key)     
         data = {"Type":"MQCFT_INTEGER64_LIST",
                 "Parameter":key,
                 "Value":integer_list}

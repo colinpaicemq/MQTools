@@ -118,19 +118,28 @@ gmo.Options = pymqi.CMQC.MQGMO_WAIT | pymqi.CMQC.MQGMO_FAIL_IF_QUIESCING
 gmo.WaitInterval = 1000 # 5 seconds
 
 try:
-   for i in range(args.count):
-      md = pymqi.MD()
-      msg = input_queue.get(None, md, gmo )
-      newMD = MQ.format_MQMD(md)
-      header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug=args.debug)
-      ret= {"reason":header["sReason"],
+    for i in range(args.count):
+        md = pymqi.MD()
+        rfh = []
+        msg = input_queue.get_rfh2(None, md, gmo,rfh )
+        #MQ.format(rfh)
+        rfh2s = []
+        for buff in rfh:
+            newRFH2 = MQ.format(buff.get())
+            rfh2s.append(newRFH2)
+        newMD = MQ.format_MQMD(md)
+        if args.debug > 0:
+            MQPCF.eprint("MQMD:",newMD )
+        header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug=args.debug)
+        ret= {"reason":header["sReason"],
             "MQMD":newMD,
             "header":header,
-            "data":data,
+            "RFH2":rfh2s,
+            "Data":data
             }
    
-      js = json.dumps(ret)
-      print(js,flush=True) # needed so the next stage gets complete json
+        js = json.dumps(ret)
+        print(js,flush=True) # needed so the next stage gets complete json
 
 except pymqi.MQMIError as e:
     if (e.reason) != 2033: 
