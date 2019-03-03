@@ -203,7 +203,11 @@ class mqpcfget(object):
                       "offset:", self.structure_offset,
                       "buffer length:", self.buffer_length,
                       file=stderr)
-            self._move_to_next_structure()
+            # need to be careful not to move ahead twice from the end of group.
+            # the field within it moved to the next structure, so if group do not 
+            # move on    
+            if not section_type == pymqi.CMQCFC.MQCFT_GROUP:    
+                self._move_to_next_structure()
             i = i+1
         return returned
 
@@ -216,8 +220,7 @@ class mqpcfget(object):
 
         parameter = self._get4()
         parameter_count = self._get4()
-        # a group is a section of common records so we call the parser recursively
-        
+        # a group is a section of common records so we call the parser recursively   
         #print("==GROUP",parameter,parameter_count)
         group_data = self._parse_detail(offset=self.data_offset, count=parameter_count)
         key = SMQPCF.sMQLOOKUP.get(("MQGA", parameter), parameter)
@@ -236,7 +239,7 @@ class mqpcfget(object):
         string_length = self._get4()
         value = self.buffer[self.data_offset:self.data_offset + string_length].decode()
         if self.strip != "no":
-            value = value.rstrip()
+            value = value.rstrip(' \0')
         key = SMQPCF.sMQLOOKUP.get(("MQCA", parameter), parameter)
         # key = self._lookup_value("MQCFT_STRING", parameter)
         data = {"Value":value,
@@ -264,7 +267,7 @@ class mqpcfget(object):
         operator = SMQPCF.sMQLOOKUP.get(("MQCFOP", operator), operator)
         value = self.buffer[self.data_offset:self.data_offset + string_length].decode()
         if self.strip != "no":
-            value = value.rstrip()
+            value = value.rstrip(' \0')
         key = SMQPCF.sMQLOOKUP.get(("MQCA", parameter), parameter)
         if self.debug > 5 :
             print("_get_string_filter",key)
@@ -284,7 +287,7 @@ class mqpcfget(object):
         for i in range(count):
             sdata = self.buffer[self.data_offset:self.data_offset + string_length].decode()
             if self.strip != "no":
-                sdata = sdata.rstrip()
+                sdata = sdata.rstrip(' \0')
             slist.append(sdata)
             self.data_offset = self.data_offset+string_length
         key = SMQPCF.sMQLOOKUP.get(("MQCA", parameter), parameter)
@@ -313,7 +316,7 @@ class mqpcfget(object):
         if printable == True:
                 value  =value.decode() # convert to string
                 if strip != "no":
-                    value = value.rstrip()     
+                    value = value.rstrip(' \0')     
         else:
             value = "0x"+value.hex() # convert it to hex
         
@@ -464,7 +467,7 @@ class mqpcfget(object):
         next one - if any)
         """
         if self.debug > 5 :
-            print("mqpcfget: old length:",self.structure_length,
+            print("mqpcfget 467: old length:",self.structure_length,
                       "old offset:",self.structure_offset,
                       file=stderr)
             print(self.buffer[self.structure_offset:self.structure_offset+16].hex(),file=stderr)
