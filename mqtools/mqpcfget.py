@@ -423,12 +423,6 @@ class mqpcfget(object):
         key = SMQPCF.sMQLOOKUP.get(("MQIA", parameter), parameter)
         # value = self._lookup_int_to_string(parameter, value) # not for 64 bits
         if self.debug > 0 :
-            pass
-        print("==_get_integer64 parameter:", parameter,
-                  "value:",value,
-                  "key:",key,
-                 ) 
-        if self.debug > 0 :
             print("==_get_integer_64 parameter:", parameter,
                   "key:",key,
                   "new value:",value) 
