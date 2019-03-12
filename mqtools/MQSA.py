@@ -461,11 +461,13 @@ def Queue_Statistics(j):
         jkeys = list(temp.keys())
         for each_key in jkeys:
             sum_mq(temp, each_key)
-        q_s.write(temp)
+        q_s.write(temp,fields)
 
 
 def flatten(level, short):
     """ make 2nd level items into top level items by adding a prefix to them """
+    if not level in json_data:
+        return
     element = json_data[level]
     del json_data[level]
     for jkeys in list(element.keys()):
@@ -593,6 +595,7 @@ while True:
         dd = record_date.day
 
     else:
+        print("startDate not found",json_data)
         record_data = None
 
     qmgr = json_data["queueMgrName"] # used in the output file name    

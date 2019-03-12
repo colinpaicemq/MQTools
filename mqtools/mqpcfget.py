@@ -417,10 +417,18 @@ class mqpcfget(object):
 
     def _get_integer_64(self):
         """ process a structure of a 64 bit numbers eg monitoring
+        typedef struct tagMQCFIN64 {
+                    MQLONG  Type;         /* Structure type */
+                    MQLONG  StrucLength;  /* Structure length */
+                    MQLONG  Parameter;    /* Parameter identifier */
+                    MQLONG  Reserved;     /* Reserved */
+                    MQINT64 Value;        /* Parameter value */
+                 } MQCFIN64;
         """
         parameter = self._get4()
+        reserved = self._get4() # would be count = 1 
         value = self._get8()
-        key = SMQPCF.sMQLOOKUP.get(("MQIA", parameter), parameter)
+        key = SMQPCF.sMQLOOKUP.get(("MQIAMO64", parameter), parameter)
         # value = self._lookup_int_to_string(parameter, value) # not for 64 bits
         if self.debug > 0 :
             print("==_get_integer_64 parameter:", parameter,
@@ -436,7 +444,7 @@ class mqpcfget(object):
         """
         parameter = self._get4()
         count = self._get4()
-        key = SMQPCF.sMQLOOKUP.get(("MQIA", parameter), parameter)
+        key = SMQPCF.sMQLOOKUP.get(("MQIAMO64", parameter), parameter)
         integer_list = []
         i = 0
         while i < count:   # count

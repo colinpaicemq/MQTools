@@ -3,6 +3,8 @@ A repository of useful bits of Python code for processing IBM MQ.
 
 These build on the low level MQ services provided by [pymqi](https://dsuch.github.io/pymqi/). 
 
+A header file to process IBM MQ monitoring data is provided in tools/monitor.h 
+
 This code is alpha level - I have tested many areas - but there are going to be areas I havent covered,
 and I am still finding small problems with formatting etc.
 
