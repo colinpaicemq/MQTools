@@ -2,7 +2,7 @@
 A repository of useful bits of code for processing IBM MQ.
 
 ## C samples 
-  1. One for putting an getting messages - with bugs to education people on debugging MQ!
+  1. One for putting an getting messages - with bugs to educate people on debugging MQ!
   1. One acting as a MQ server in C  
 
 ## Python code
