@@ -95,9 +95,8 @@ int main( int argc, char *argv[])
 	OpenOptionsInput  = MQOO_INPUT_EXCLUSIVE +
 			     	    MQOO_FAIL_IF_QUIESCING;
 	OpenOptionsOutput =
-			//1 MQOO_INPUT_EXCLUSIVE +
-			            MQOO_OUTPUT +
-				     	MQOO_FAIL_IF_QUIESCING;
+			   MQOO_INPUT_EXCLUSIVE +
+			   MQOO_FAIL_IF_QUIESCING;
 
 	MsgDesc.MsgType = MQMT_REQUEST;
 	MsgDesc.MsgType = MQMT_DATAGRAM;
