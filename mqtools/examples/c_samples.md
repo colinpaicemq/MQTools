@@ -1,6 +1,6 @@
 # C Samples
 
-Tso samples are provided  
+Two samples are provided  
   1. One for putting an getting messages - with bugs to educate people on debugging MQ!
   1. One acting as a MQ server in C  
 
@@ -25,7 +25,9 @@ Syntax
 * qm_name the queue manager name
 * output_queuename - messages are put here
 * input_queue name.   This is used to get messages.  It can be = to specify the same queue
-examples
+
+### examples
+
 * ./putgetsample QMA myqueue myqueue
 * ./putgetsample QMA SYSTEM.DEFAULT.MODEL.QUEUE SYSTEM.DEFAULT.MODEL.QUEUE
   * this creates and uses a temporary dynamic queue 
@@ -38,7 +40,7 @@ This is a working sample. The parameters are
 
 it displays a message showing number of messages processed every 1000 messages.
 
-## problems that need to be fixed
+## Problems that need to be fixed
 * missing MQOO_OUTPUT on the output queue 
 * MQOO_INPUT_EXCLUSIVE is used, so the queue cannot be shared
 * Expiry time is set to 1 second so the first message has expired before it is got
@@ -46,5 +48,5 @@ it displays a message showing number of messages processed every 1000 messages.
 * Input buffer is too small
 
 The code that needs to be changed is all within 30 lines of code delimited by 
-  //****** For education make changes below here ****************	
-  //****** For education make changes above here  **************
+  * //****** For education make changes below here ****************	
+  * //****** For education make changes above here  **************
