@@ -1,5 +1,11 @@
 # MQTools
-A repository of useful bits of Python code for processing IBM MQ.
+A repository of useful bits of code for processing IBM MQ.
+
+* C samples 
+  One for putting an getting messages - with bugs to education people on debugging MQ!
+  One acting as a MQ server in C  
+
+*Python code
 
 These build on the low level MQ services provided by [pymqi](https://dsuch.github.io/pymqi/). 
 
