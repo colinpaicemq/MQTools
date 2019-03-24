@@ -50,3 +50,18 @@ it displays a message showing number of messages processed every 1000 messages.
 The code that needs to be changed is all within 30 lines of code delimited by 
   * //****** For education make changes below here ****************	
   * //****** For education make changes above here  **************
+
+A more subtle one is 
+
+After you get Return code from get cc=1 rc=2080 MQRC_TRUNCATED_MSG_FAILED
+you rerun it quickly, and it get 
+MQ Input Queue being opened   CP0000
+MQOPEN mqcc 2 mqrc 2042 MQRC_OBJECT_IN_USE.
+
+Wait for 2 seconds and it works.
+
+The previous instance ended, (because you reissue the command from your shell). 
+So why is it giving MQRC_OBJECT_IN_USE?  Non other task is using it.
+
+The fix for this is not within the sets on lines mentioned above.
+
