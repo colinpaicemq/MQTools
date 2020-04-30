@@ -1,8 +1,8 @@
 #
 # constants generated from IBM MQ Header files
 # Contact ColinPaiceMQ@GMAIL.COM
-# Generated on Tue Mar 12 13:07:35 2019
-
+# Generated on Thu May 23 20:23:58 2019
+#
 #
 sLookupTypes ={
   136:"MQMON" 
@@ -45,6 +45,7 @@ sLookupTypes ={
 , 1101:"MQQSO" 
 , 1099:"MQQSO" 
 , 1100:"MQQSO" 
+, 1240:"MQOPER" 
 , 1165:"MQUSAGE_PS" 
 , 1283:"MQPRI_PRIORITY" 
 , 1271:"MQPSPROP" 
@@ -386,7 +387,7 @@ sMQLOOKUP = {
 ,("MQBA",7005): "EXTERNAL_UOW_ID" 
 ,("MQBA",7007): "GENERIC_CONNECTION_ID" 
 ,("MQBA",7012): "GROUP_ID" 
-,("MQBA",7035): "LAST_USED" 
+,("MQBA",7037): "LAST_USED" 
 ,("MQBA",7020): "MESSAGE_DATA" 
 ,("MQBA",7021): "MQBO_STRUCT" 
 ,("MQBA",7023): "MQCBC_STRUCT" 
@@ -401,7 +402,9 @@ sMQLOOKUP = {
 ,("MQBA",7031): "MQSTS_STRUCT" 
 ,("MQBA",7013): "MSG_ID" 
 ,("MQBA",7008): "ORIGIN_UOW_ID" 
+,("MQBA",7037): "PROPERTIES_DATA" 
 ,("MQBA",7009): "Q_MGR_UOW_ID" 
+,("MQBA",7036): "REQUEST_ID" 
 ,("MQBA",7004): "RESPONSE_ID" 
 ,("MQBA",7003): "RESPONSE_SET" 
 ,("MQBA",7032): "SUB_CORREL_ID" 
@@ -1059,6 +1062,7 @@ sMQLOOKUP = {
 ,("MQCFT",12): "REPORT" 
 ,("MQCFT",2): "RESPONSE" 
 ,("MQCFT",21): "STATISTICS" 
+,("MQCFT",27): "STATUS" 
 ,("MQCFT",4): "STRING" 
 ,("MQCFT",14): "STRING_FILTER" 
 ,("MQCFT",6): "STRING_LIST" 
@@ -1187,7 +1191,7 @@ sMQLOOKUP = {
 ,("MQCMDI",17): "SEC_SIGNOFF_ERROR" 
 ,("MQCMDI",14): "SEC_TIMER_ZERO" 
 ,("MQCMDI",21): "SEC_UPPERCASE" 
-,("MQCMDL",910): "CURRENT_LEVEL" 
+,("MQCMDL",912): "CURRENT_LEVEL" 
 ,("MQCMDL",100): "LEVEL_1" 
 ,("MQCMDL",101): "LEVEL_101" 
 ,("MQCMDL",110): "LEVEL_110" 
@@ -1223,6 +1227,8 @@ sMQLOOKUP = {
 ,("MQCMDL",904): "LEVEL_904" 
 ,("MQCMDL",905): "LEVEL_905" 
 ,("MQCMDL",910): "LEVEL_910" 
+,("MQCMDL",911): "LEVEL_911" 
+,("MQCMDL",912): "LEVEL_912" 
 ,("MQCMD",167): "ACCOUNTING_MQI" 
 ,("MQCMD",168): "ACCOUNTING_Q" 
 ,("MQCMD",69): "ACTIVITY_MSG" 
@@ -1355,6 +1361,8 @@ sMQLOOKUP = {
 ,("MQCMD",125): "INQUIRE_TRACE" 
 ,("MQCMD",126): "INQUIRE_USAGE" 
 ,("MQCMD",214): "INQUIRE_XR_CAPABILITY" 
+,("MQCMD",219): "INTER_Q_MGR_BALANCE" 
+,("MQCMD",218): "INTER_Q_MGR_STATUS" 
 ,("MQCMD",91): "LOGGER_EVENT" 
 ,("MQCMD",127): "MOVE_Q" 
 ,("MQCMD",196): "MQXR_DIAGNOSTICS" 
@@ -1433,9 +1441,9 @@ sMQLOOKUP = {
 ,("MQCNO",262144): "ALL_CONVS_SHARE" 
 ,("MQCNO",524288): "CD_FOR_OUTPUT_ONLY" 
 ,("MQCNO",2048): "CLIENT_BINDING" 
-,("MQCNO",208): "CURRENT_LENGTH (4 byte)" 
-,("MQCNO",224): "CURRENT_LENGTH (8 byte)" 
-,("MQCNO",6): "CURRENT_VERSION" 
+,("MQCNO",240): "CURRENT_LENGTH (4 byte)" 
+,("MQCNO",256): "CURRENT_LENGTH (8 byte)" 
+,("MQCNO",7): "CURRENT_VERSION" 
 ,("MQCNO",1): "FASTPATH_BINDING" 
 ,("MQCNO",64): "HANDLE_SHARE_BLOCK" 
 ,("MQCNO",32): "HANDLE_SHARE_NONE" 
@@ -1452,6 +1460,8 @@ sMQLOOKUP = {
 ,("MQCNO",200): "LENGTH_5 (8 byte)" 
 ,("MQCNO",208): "LENGTH_6 (4 byte)" 
 ,("MQCNO",224): "LENGTH_6 (8 byte)" 
+,("MQCNO",240): "LENGTH_7 (4 byte)" 
+,("MQCNO",256): "LENGTH_7 (8 byte)" 
 ,("MQCNO",1024): "LOCAL_BINDING" 
 ,("MQCNO",0): "NONE" 
 ,("MQCNO",65536): "NO_CONV_SHARING" 
@@ -1472,6 +1482,7 @@ sMQLOOKUP = {
 ,("MQCNO",4): "VERSION_4" 
 ,("MQCNO",5): "VERSION_5" 
 ,("MQCNO",6): "VERSION_6" 
+,("MQCNO",7): "VERSION_7" 
 ,("MQCODL",-1): "AS_INPUT" 
 ,("MQCOMPRESS",268435455): "ANY" 
 ,("MQCOMPRESS",0): "NONE" 
@@ -1784,12 +1795,16 @@ sMQLOOKUP = {
 ,("MQFUN",4): "TYPE_USERDEF" 
 ,("MQGA",8005): "ACTIVITY" 
 ,("MQGA",8013): "ACTIVITY_TRACE" 
+,("MQGA",8020): "ALL_APPLS" 
+,("MQGA",8021): "APPL_BALANCE" 
+,("MQGA",8018): "APPL_STATUS" 
 ,("MQGA",8014): "APP_DIST_LIST" 
+,("MQGA",8019): "CHANGED_APPLS" 
 ,("MQGA",8012): "CHL_STATISTICS_DATA" 
 ,("MQGA",8001): "COMMAND_CONTEXT" 
 ,("MQGA",8002): "COMMAND_DATA" 
 ,("MQGA",8006): "EMBEDDED_MQMD" 
-,("MQGA",8017): "LAST_USED" 
+,("MQGA",8021): "LAST_USED" 
 ,("MQGA",8007): "MESSAGE" 
 ,("MQGA",8015): "MONITOR_CLASS" 
 ,("MQGA",8017): "MONITOR_ELEMENT" 
@@ -1958,6 +1973,7 @@ sMQLOOKUP = {
 ,("MQIA",1028): "HANDLE_STATE" 
 ,("MQIA",1360): "HOBJ" 
 ,("MQIA",1382): "HSUB" 
+,("MQIA",1423): "IGNORE_STATE" 
 ,("MQIA",1074): "INQUIRY" 
 ,("MQIA",1393): "INTATTR_COUNT" 
 ,("MQIA",1080): "INTEGER_DATA" 
@@ -1966,7 +1982,7 @@ sMQLOOKUP = {
 ,("MQIA",1371): "INVALID_DEST_COUNT" 
 ,("MQIA",1378): "ITEM_COUNT" 
 ,("MQIA",1369): "KNOWN_DEST_COUNT" 
-,("MQIA",1422): "LAST_USED" 
+,("MQIA",1424): "LAST_USED" 
 ,("MQIA",1409): "LDAP_CONNECTION_STATUS" 
 ,("MQIA",1222): "LISTENER_ATTRS" 
 ,("MQIA",1223): "LISTENER_STATUS_ATTRS" 
@@ -1980,6 +1996,7 @@ sMQLOOKUP = {
 ,("MQIA",1290): "MESSAGE_COUNT" 
 ,("MQIA",1008): "MODE" 
 ,("MQIA",1258): "MONITORING" 
+,("MQIA",1424): "MOVABLE_APPL_COUNT" 
 ,("MQIA",1171): "MOVE_COUNT" 
 ,("MQIA",1145): "MOVE_TYPE" 
 ,("MQIA",1147): "MOVE_TYPE_ADD" 
@@ -2803,6 +2820,8 @@ sMQLOOKUP = {
 ,("MQIND",-1): "NONE" 
 ,("MQIPADDR",0): "IPV4" 
 ,("MQIPADDR",1): "IPV6" 
+,("MQIS",0): "NO" 
+,("MQIS",1): "YES" 
 ,("MQITEM",3): "BAG" 
 ,("MQITEM",4): "BYTE_STRING" 
 ,("MQITEM",8): "BYTE_STRING_FILTER" 
@@ -3574,6 +3593,7 @@ sMQLOOKUP = {
 ,("MQRC",3176): "PROGRAM_NOT_AVAILABLE" 
 ,("MQRC",3359): "PSCLUS_DISABLED_TOPDEF" 
 ,("MQRC",3360): "PSCLUS_TOPIC_EXISTS" 
+,("MQRC",3383): "PS_REQUIRED_MQUC" 
 ,("MQRC",3318): "PUBSUB_INHIBITED" 
 ,("MQRC",3084): "PUB_OPTIONS_ERROR" 
 ,("MQRC",3046): "PURGE_VALUE_ERROR" 
@@ -3882,6 +3902,7 @@ sMQLOOKUP = {
 ,("MQRC",2464): "IMPO_ERROR" 
 ,("MQRC",2241): "INCOMPLETE_GROUP" 
 ,("MQRC",2242): "INCOMPLETE_MSG" 
+,("MQRC",2147): "INCOMPLETE_TRANSACTION" 
 ,("MQRC",2259): "INCONSISTENT_BROWSE" 
 ,("MQRC",2243): "INCONSISTENT_CCSIDS" 
 ,("MQRC",2244): "INCONSISTENT_ENCODINGS" 
@@ -5223,128 +5244,128 @@ sMQLOOKUP = {
 ,("MQQA_QS",0):  "NOT_SHAREABLE" 
 ,("MQQA_BO",1):  "BACKOUT_HARDENED" 
 ,("MQQA_BO",0):  "BACKOUT_NOT_HARDENED" 
-,("MONITOR",0000): ,"User_CPU_pc"
-,("MONITOR",0001): ,"Sys_CPU_pc"
-,("MONITOR",0002): ,"CPU_Load1M"
-,("MONITOR",0003): ,"CPU_Load5M"
-,("MONITOR",0004): ,"CPU_Load15M"
-,("MONITOR",0005): ,"RAM_Free_pc"
-,("MONITOR",0006): ,"RAM_Total_MB"
-,("MONITOR",0100): ,"User_CPU_pc"
-,("MONITOR",0101): ,"Sys_CPU_pc"
-,("MONITOR",0102): ,"RAM_Total_MB"
-,("MONITOR",1004): ,"Trace_fs_use_MB"
-,("MONITOR",1005): ,"Trace_system_free_pc"
-,("MONITOR",1006): ,"Errors_fs_in_use_MB"
-,("MONITOR",1007): ,"Errors_fs_free_pc"
-,("MONITOR",1008): ,"FDC_file_count"
-,("MONITOR",1100): ,"QM_fs_in_use_MB"
-,("MONITOR",1101): ,"QM_fs_free_pc"
-,("MONITOR",1200): ,"Log_in_use_MB"
-,("MONITOR",1201): ,"Log_max_MB"
-,("MONITOR",1202): ,"Log_fs_in_use"
-,("MONITOR",1203): ,"Log_fs_max"
-,("MONITOR",1204): ,"Log_physical_written"
-,("MONITOR",1205): ,"Log_logic_written"
-,("MONITOR",1206): ,"Log_write_latency"
-,("MONITOR",1207): ,"Log_space_in_use_pc"
-,("MONITOR",1208): ,"Log_space_util_pc"
-,("MONITOR",1209): ,"Log_media_MB"
-,("MONITOR",1210): ,"Log_reusable_MB"
-,("MONITOR",1211): ,"Log_w_archive_MB"
-,("MONITOR",1212): ,"Log_write_size"
-,("MONITOR",2000): ,"MQCONNs_OK"
-,("MONITOR",2001): ,"MQCONNNs_failed"
-,("MONITOR",2002): ,"MQCONNs_hwm"
-,("MONITOR",2003): ,"MQDISC"
-,("MONITOR",2100): ,"MQOPEN"
-,("MONITOR",2101): ,"MQOPEN_failed"
-,("MONITOR",2102): ,"MQCLOSE"
-,("MONITOR",2103): ,"MQCLOSE_failed"
-,("MONITOR",2200): ,"MQINQ"
-,("MONITOR",2201): ,"MQINQ_failed"
-,("MONITOR",2202): ,"MQSET"
-,("MONITOR",2203): ,"MQSET_failed"
-,("MONITOR",2300): ,"MQPUTs"
-,("MONITOR",2301): ,"MQPUT_bytes"
-,("MONITOR",2302): ,"MQPUTs_NP"
-,("MONITOR",2303): ,"MQPUTs_P"
-,("MONITOR",2304): ,"MQPUTs_failed"
-,("MONITOR",2305): ,"MQPUT1s_NP"
-,("MONITOR",2306): ,"MQPUT1s_P"
-,("MONITOR",2307): ,"MQPUT1s_failed"
-,("MONITOR",2308): ,"MQPUT_NP_bytes"
-,("MONITOR",2309): ,"MQPUT_P_bytes"
-,("MONITOR",2310): ,"MQSTATs"
-,("MONITOR",2400): ,"MQGETs"
-,("MONITOR",2401): ,"MQGET_bytes"
-,("MONITOR",2402): ,"MQGETs_NP"
-,("MONITOR",2403): ,"MQGETs_P"
-,("MONITOR",2404): ,"MQGETs_failed"
-,("MONITOR",2405): ,"MQGET_NP_bytes"
-,("MONITOR",2406): ,"MQGET_P_bytes"
-,("MONITOR",2407): ,"Browses_NP"
-,("MONITOR",2408): ,"Browses_P"
-,("MONITOR",2409): ,"Browses_failed"
-,("MONITOR",2410): ,"Browses_NP_bytes"
-,("MONITOR",2411): ,"Browses_P_bytes"
-,("MONITOR",2412): ,"Expired"
-,("MONITOR",2413): ,"Purge_queue"
-,("MONITOR",2414): ,"MQCBs"
-,("MONITOR",2415): ,"MQCB_failed"
-,("MONITOR",2416): ,"MQCTLs"
-,("MONITOR",2500): ,"Commits"
-,("MONITOR",2502): ,"Rollbacks"
-,("MONITOR",2600): ,"Create_durable_sub"
-,("MONITOR",2601): ,"Alter_durable_sub"
-,("MONITOR",2602): ,"Resume_durable-sub"
-,("MONITOR",2603): ,"Create_ndurable_sub"
-,("MONITOR",2606): ,"c/a/r_sub_failed"
-,("MONITOR",2607): ,"Delete_durable"
-,("MONITOR",2608): ,"Delete_ndurable"
-,("MONITOR",2609): ,"Delete_sub_failed"
-,("MONITOR",2610): ,"MQSUBRQs"
-,("MONITOR",2611): ,"MQSUBRQ_failed"
-,("MONITOR",2612): ,"Durable_sub_hwm"
-,("MONITOR",2613): ,"Durable_sub_low"
-,("MONITOR",2614): ,"NDurable_sub_hwm"
-,("MONITOR",2615): ,"NDurable_sub_lwm"
-,("MONITOR",2700): ,"Topic_puts"
-,("MONITOR",2701): ,"Topic_put_bytes"
-,("MONITOR",2702): ,"Pub_to_subs"
-,("MONITOR",2703): ,"Pub_to_sub_bytes"
-,("MONITOR",2704): ,"Topic_puts_NP"
-,("MONITOR",2705): ,"Topic_puts_P"
-,("MONITOR",2706): ,"Topic_puts_failed"
-,("MONITOR",3000): ,"MQOPENs"
-,("MONITOR",3001): ,"MQCLOSEs"
-,("MONITOR",3100): ,"MQINQs"
-,("MONITOR",3101): ,"MQSETs"
-,("MONITOR",3200): ,"MQPUTs"
-,("MONITOR",3201): ,"MQPUTs_bytes"
-,("MONITOR",3202): ,"MQPUTs_NP"
-,("MONITOR",3203): ,"MQPUTs_P"
-,("MONITOR",3204): ,"MQPUT1s_NP"
-,("MONITOR",3205): ,"MQPUT1s_P"
-,("MONITOR",3206): ,"MQPUTs_NP_bytes"
-,("MONITOR",3207): ,"MQPUTs_P_bytes"
-,("MONITOR",3208): ,"MQPUTs_avoided_pc"
-,("MONITOR",3209): ,"MQPUTS_avoided_bytes_pc"
-,("MONITOR",3210): ,"MQPUTs_lock_contention_pc"
-,("MONITOR",3300): ,"MQGETs"
-,("MONITOR",3301): ,"MQGET_bytes"
-,("MONITOR",3302): ,"MQGETs_NP"
-,("MONITOR",3303): ,"MQGETS_P"
-,("MONITOR",3304): ,"MQGET_NO_bytes"
-,("MONITOR",3305): ,"MQGET_P_bytes"
-,("MONITOR",3306): ,"Browses_NP"
-,("MONITOR",3307): ,"Browses_P"
-,("MONITOR",3308): ,"Browses_NP_bytes"
-,("MONITOR",3309): ,"Browses_P_bytes"
-,("MONITOR",3310): ,"Msgs_expired"
-,("MONITOR",3311): ,"Queue_purged"
-,("MONITOR",3312): ,"Avg_toq"
-,("MONITOR",3313): ,"Queue_depth"
+,("MONITOR",   0): "User_CPU_pc"
+,("MONITOR",   1): "Sys_CPU_pc"
+,("MONITOR",   2): "CPU_Load1M"
+,("MONITOR",   3): "CPU_Load5M"
+,("MONITOR",   4): "CPU_Load15M"
+,("MONITOR",   5): "RAM_Free_pc"
+,("MONITOR",   6): "RAM_Total_MB"
+,("MONITOR", 100): "User_CPU_pc"
+,("MONITOR", 101): "Sys_CPU_pc"
+,("MONITOR", 102): "RAM_Total_MB"
+,("MONITOR",1004): "Trace_fs_use_MB"
+,("MONITOR",1005): "Trace_system_free_pc"
+,("MONITOR",1006): "Errors_fs_in_use_MB"
+,("MONITOR",1007): "Errors_fs_free_pc"
+,("MONITOR",1008): "FDC_file_count"
+,("MONITOR",1100): "QM_fs_in_use_MB"
+,("MONITOR",1101): "QM_fs_free_pc"
+,("MONITOR",1200): "Log_in_use_MB"
+,("MONITOR",1201): "Log_max_MB"
+,("MONITOR",1202): "Log_fs_in_use"
+,("MONITOR",1203): "Log_fs_max"
+,("MONITOR",1204): "Log_physical_written"
+,("MONITOR",1205): "Log_logic_written"
+,("MONITOR",1206): "Log_write_latency"
+,("MONITOR",1207): "Log_space_in_use_pc"
+,("MONITOR",1208): "Log_space_util_pc"
+,("MONITOR",1209): "Log_media_MB"
+,("MONITOR",1200): "Log_reusable_MB"
+,("MONITOR",1211): "Log_w_archive_MB"
+,("MONITOR",1212): "Log_write_size"
+,("MONITOR",2000): "MQCONNs_OK"
+,("MONITOR",2001): "MQCONNNs_failed"
+,("MONITOR",2002): "MQCONNs_hwm"
+,("MONITOR",2003): "MQDISC"
+,("MONITOR",2100): "MQOPEN"
+,("MONITOR",2101): "MQOPEN_failed"
+,("MONITOR",2102): "MQCLOSE"
+,("MONITOR",2103): "MQCLOSE_failed"
+,("MONITOR",2200): "MQINQ"
+,("MONITOR",2201): "MQINQ_failed"
+,("MONITOR",2202): "MQSET"
+,("MONITOR",2203): "MQSET_failed"
+,("MONITOR",2300): "MQPUTs"
+,("MONITOR",2301): "MQPUT_bytes"
+,("MONITOR",2302): "MQPUTs_NP"
+,("MONITOR",2303): "MQPUTs_P"
+,("MONITOR",2304): "MQPUTs_failed"
+,("MONITOR",2305): "MQPUT1s_NP"
+,("MONITOR",2306): "MQPUT1s_P"
+,("MONITOR",2307): "MQPUT1s_failed"
+,("MONITOR",2308): "MQPUT_NP_bytes"
+,("MONITOR",2309): "MQPUT_P_bytes"
+,("MONITOR",2310): "MQSTATs"
+,("MONITOR",2400): "MQGETs"
+,("MONITOR",2401): "MQGET_bytes"
+,("MONITOR",2402): "MQGETs_NP"
+,("MONITOR",2403): "MQGETs_P"
+,("MONITOR",2404): "MQGETs_failed"
+,("MONITOR",2405): "MQGET_NP_bytes"
+,("MONITOR",2406): "MQGET_P_bytes"
+,("MONITOR",2407): "Browses_NP"
+,("MONITOR",2408): "Browses_P"
+,("MONITOR",2409): "Browses_failed"
+,("MONITOR",2410): "Browses_NP_bytes"
+,("MONITOR",2411): "Browses_P_bytes"
+,("MONITOR",2412): "Expired"
+,("MONITOR",2413): "Purge_queue"
+,("MONITOR",2414): "MQCBs"
+,("MONITOR",2415): "MQCB_failed"
+,("MONITOR",2416): "MQCTLs"
+,("MONITOR",2500): "Commits"
+,("MONITOR",2502): "Rollbacks"
+,("MONITOR",2600): "Create_durable_sub"
+,("MONITOR",2601): "Alter_durable_sub"
+,("MONITOR",2602): "Resume_durable-sub"
+,("MONITOR",2603): "Create_ndurable_sub"
+,("MONITOR",2606): "c/a/r_sub_failed"
+,("MONITOR",2607): "Delete_durable"
+,("MONITOR",2608): "Delete_ndurable"
+,("MONITOR",2609): "Delete_sub_failed"
+,("MONITOR",2610): "MQSUBRQs"
+,("MONITOR",2611): "MQSUBRQ_failed"
+,("MONITOR",2612): "Durable_sub_hwm"
+,("MONITOR",2613): "Durable_sub_low"
+,("MONITOR",2614): "NDurable_sub_hwm"
+,("MONITOR",2615): "NDurable_sub_lwm"
+,("MONITOR",2700): "Topic_puts"
+,("MONITOR",2701): "Topic_put_bytes"
+,("MONITOR",2702): "Pub_to_subs"
+,("MONITOR",2703): "Pub_to_sub_bytes"
+,("MONITOR",2704): "Topic_puts_NP"
+,("MONITOR",2705): "Topic_puts_P"
+,("MONITOR",2706): "Topic_puts_failed"
+,("MONITOR",3000): "MQOPENs"
+,("MONITOR",3001): "MQCLOSEs"
+,("MONITOR",3100): "MQINQs"
+,("MONITOR",3101): "MQSETs"
+,("MONITOR",3200): "MQPUTs"
+,("MONITOR",3201): "MQPUTs_bytes"
+,("MONITOR",3202): "MQPUTs_NP"
+,("MONITOR",3203): "MQPUTs_P"
+,("MONITOR",3204): "MQPUT1s_NP"
+,("MONITOR",3205): "MQPUT1s_P"
+,("MONITOR",3206): "MQPUTs_NP_bytes"
+,("MONITOR",3207): "MQPUTs_P_bytes"
+,("MONITOR",3208): "MQPUTs_avoided_pc"
+,("MONITOR",3209): "MQPUTS_avoided_bytes_pc"
+,("MONITOR",3210): "MQPUTs_lock_contention_pc"
+,("MONITOR",3300): "MQGETs"
+,("MONITOR",3301): "MQGET_bytes"
+,("MONITOR",3302): "MQGETs_NP"
+,("MONITOR",3303): "MQGETS_P"
+,("MONITOR",3304): "MQGET_NO_bytes"
+,("MONITOR",3305): "MQGET_P_bytes"
+,("MONITOR",3306): "Browses_NP"
+,("MONITOR",3307): "Browses_P"
+,("MONITOR",3308): "Browses_NP_bytes"
+,("MONITOR",3309): "Browses_P_bytes"
+,("MONITOR",3310): "Msgs_expired"
+,("MONITOR",3311): "Queue_purged"
+,("MONITOR",3312): "Avg_toq"
+,("MONITOR",3313): "Queue_depth"
 }
 sLookupToI = {
  ("MQACH","CURRENT_LENGTH (4 byte)"): 68 
@@ -5513,7 +5534,7 @@ sLookupToI = {
 ,("MQBA","EXTERNAL_UOW_ID"): 7005 
 ,("MQBA","GENERIC_CONNECTION_ID"): 7007 
 ,("MQBA","GROUP_ID"): 7012 
-,("MQBA","LAST_USED"): 7035 
+,("MQBA","LAST_USED"): 7037 
 ,("MQBA","MESSAGE_DATA"): 7020 
 ,("MQBA","MQBO_STRUCT"): 7021 
 ,("MQBA","MQCBC_STRUCT"): 7023 
@@ -5528,7 +5549,9 @@ sLookupToI = {
 ,("MQBA","MQSTS_STRUCT"): 7031 
 ,("MQBA","MSG_ID"): 7013 
 ,("MQBA","ORIGIN_UOW_ID"): 7008 
+,("MQBA","PROPERTIES_DATA"): 7037 
 ,("MQBA","Q_MGR_UOW_ID"): 7009 
+,("MQBA","REQUEST_ID"): 7036 
 ,("MQBA","RESPONSE_ID"): 7004 
 ,("MQBA","RESPONSE_SET"): 7003 
 ,("MQBA","SUB_CORREL_ID"): 7032 
@@ -6186,6 +6209,7 @@ sLookupToI = {
 ,("MQCFT","REPORT"): 12 
 ,("MQCFT","RESPONSE"): 2 
 ,("MQCFT","STATISTICS"): 21 
+,("MQCFT","STATUS"): 27 
 ,("MQCFT","STRING"): 4 
 ,("MQCFT","STRING_FILTER"): 14 
 ,("MQCFT","STRING_LIST"): 6 
@@ -6314,7 +6338,7 @@ sLookupToI = {
 ,("MQCMDI","SEC_SIGNOFF_ERROR"): 17 
 ,("MQCMDI","SEC_TIMER_ZERO"): 14 
 ,("MQCMDI","SEC_UPPERCASE"): 21 
-,("MQCMDL","CURRENT_LEVEL"): 910 
+,("MQCMDL","CURRENT_LEVEL"): 912 
 ,("MQCMDL","LEVEL_1"): 100 
 ,("MQCMDL","LEVEL_101"): 101 
 ,("MQCMDL","LEVEL_110"): 110 
@@ -6350,6 +6374,8 @@ sLookupToI = {
 ,("MQCMDL","LEVEL_904"): 904 
 ,("MQCMDL","LEVEL_905"): 905 
 ,("MQCMDL","LEVEL_910"): 910 
+,("MQCMDL","LEVEL_911"): 911 
+,("MQCMDL","LEVEL_912"): 912 
 ,("MQCMD","ACCOUNTING_MQI"): 167 
 ,("MQCMD","ACCOUNTING_Q"): 168 
 ,("MQCMD","ACTIVITY_MSG"): 69 
@@ -6482,6 +6508,8 @@ sLookupToI = {
 ,("MQCMD","INQUIRE_TRACE"): 125 
 ,("MQCMD","INQUIRE_USAGE"): 126 
 ,("MQCMD","INQUIRE_XR_CAPABILITY"): 214 
+,("MQCMD","INTER_Q_MGR_BALANCE"): 219 
+,("MQCMD","INTER_Q_MGR_STATUS"): 218 
 ,("MQCMD","LOGGER_EVENT"): 91 
 ,("MQCMD","MOVE_Q"): 127 
 ,("MQCMD","MQXR_DIAGNOSTICS"): 196 
@@ -6560,9 +6588,9 @@ sLookupToI = {
 ,("MQCNO","ALL_CONVS_SHARE"): 262144 
 ,("MQCNO","CD_FOR_OUTPUT_ONLY"): 524288 
 ,("MQCNO","CLIENT_BINDING"): 2048 
-,("MQCNO","CURRENT_LENGTH (4 byte)"): 208 
-,("MQCNO","CURRENT_LENGTH (8 byte)"): 224 
-,("MQCNO","CURRENT_VERSION"): 6 
+,("MQCNO","CURRENT_LENGTH (4 byte)"): 240 
+,("MQCNO","CURRENT_LENGTH (8 byte)"): 256 
+,("MQCNO","CURRENT_VERSION"): 7 
 ,("MQCNO","FASTPATH_BINDING"): 1 
 ,("MQCNO","HANDLE_SHARE_BLOCK"): 64 
 ,("MQCNO","HANDLE_SHARE_NONE"): 32 
@@ -6579,6 +6607,8 @@ sLookupToI = {
 ,("MQCNO","LENGTH_5 (8 byte)"): 200 
 ,("MQCNO","LENGTH_6 (4 byte)"): 208 
 ,("MQCNO","LENGTH_6 (8 byte)"): 224 
+,("MQCNO","LENGTH_7 (4 byte)"): 240 
+,("MQCNO","LENGTH_7 (8 byte)"): 256 
 ,("MQCNO","LOCAL_BINDING"): 1024 
 ,("MQCNO","NONE"): 0 
 ,("MQCNO","NO_CONV_SHARING"): 65536 
@@ -6599,6 +6629,7 @@ sLookupToI = {
 ,("MQCNO","VERSION_4"): 4 
 ,("MQCNO","VERSION_5"): 5 
 ,("MQCNO","VERSION_6"): 6 
+,("MQCNO","VERSION_7"): 7 
 ,("MQCODL","AS_INPUT"): -1 
 ,("MQCOMPRESS","ANY"): 268435455 
 ,("MQCOMPRESS","NONE"): 0 
@@ -6911,12 +6942,16 @@ sLookupToI = {
 ,("MQFUN","TYPE_USERDEF"): 4 
 ,("MQGA","ACTIVITY"): 8005 
 ,("MQGA","ACTIVITY_TRACE"): 8013 
+,("MQGA","ALL_APPLS"): 8020 
+,("MQGA","APPL_BALANCE"): 8021 
+,("MQGA","APPL_STATUS"): 8018 
 ,("MQGA","APP_DIST_LIST"): 8014 
+,("MQGA","CHANGED_APPLS"): 8019 
 ,("MQGA","CHL_STATISTICS_DATA"): 8012 
 ,("MQGA","COMMAND_CONTEXT"): 8001 
 ,("MQGA","COMMAND_DATA"): 8002 
 ,("MQGA","EMBEDDED_MQMD"): 8006 
-,("MQGA","LAST_USED"): 8017 
+,("MQGA","LAST_USED"): 8021 
 ,("MQGA","MESSAGE"): 8007 
 ,("MQGA","MONITOR_CLASS"): 8015 
 ,("MQGA","MONITOR_ELEMENT"): 8017 
@@ -7085,6 +7120,7 @@ sLookupToI = {
 ,("MQIA","HANDLE_STATE"): 1028 
 ,("MQIA","HOBJ"): 1360 
 ,("MQIA","HSUB"): 1382 
+,("MQIA","IGNORE_STATE"): 1423 
 ,("MQIA","INQUIRY"): 1074 
 ,("MQIA","INTATTR_COUNT"): 1393 
 ,("MQIA","INTEGER_DATA"): 1080 
@@ -7093,7 +7129,7 @@ sLookupToI = {
 ,("MQIA","INVALID_DEST_COUNT"): 1371 
 ,("MQIA","ITEM_COUNT"): 1378 
 ,("MQIA","KNOWN_DEST_COUNT"): 1369 
-,("MQIA","LAST_USED"): 1422 
+,("MQIA","LAST_USED"): 1424 
 ,("MQIA","LDAP_CONNECTION_STATUS"): 1409 
 ,("MQIA","LISTENER_ATTRS"): 1222 
 ,("MQIA","LISTENER_STATUS_ATTRS"): 1223 
@@ -7107,6 +7143,7 @@ sLookupToI = {
 ,("MQIA","MESSAGE_COUNT"): 1290 
 ,("MQIA","MODE"): 1008 
 ,("MQIA","MONITORING"): 1258 
+,("MQIA","MOVABLE_APPL_COUNT"): 1424 
 ,("MQIA","MOVE_COUNT"): 1171 
 ,("MQIA","MOVE_TYPE"): 1145 
 ,("MQIA","MOVE_TYPE_ADD"): 1147 
@@ -7930,6 +7967,8 @@ sLookupToI = {
 ,("MQIND","NONE"): -1 
 ,("MQIPADDR","IPV4"): 0 
 ,("MQIPADDR","IPV6"): 1 
+,("MQIS","NO"): 0 
+,("MQIS","YES"): 1 
 ,("MQITEM","BAG"): 3 
 ,("MQITEM","BYTE_STRING"): 4 
 ,("MQITEM","BYTE_STRING_FILTER"): 8 
@@ -8701,6 +8740,7 @@ sLookupToI = {
 ,("MQRC","PROGRAM_NOT_AVAILABLE"): 3176 
 ,("MQRC","PSCLUS_DISABLED_TOPDEF"): 3359 
 ,("MQRC","PSCLUS_TOPIC_EXISTS"): 3360 
+,("MQRC","PS_REQUIRED_MQUC"): 3383 
 ,("MQRC","PUBSUB_INHIBITED"): 3318 
 ,("MQRC","PUB_OPTIONS_ERROR"): 3084 
 ,("MQRC","PURGE_VALUE_ERROR"): 3046 
@@ -9009,6 +9049,7 @@ sLookupToI = {
 ,("MQRC","IMPO_ERROR"): 2464 
 ,("MQRC","INCOMPLETE_GROUP"): 2241 
 ,("MQRC","INCOMPLETE_MSG"): 2242 
+,("MQRC","INCOMPLETE_TRANSACTION"): 2147 
 ,("MQRC","INCONSISTENT_BROWSE"): 2259 
 ,("MQRC","INCONSISTENT_CCSIDS"): 2243 
 ,("MQRC","INCONSISTENT_ENCODINGS"): 2244 
@@ -10383,7 +10424,9 @@ selectTypeI= {
  ("MQBACF",7031):  "MQSTS_STRUCT", 
  ("MQBACF",7013):  "MSG_ID", 
  ("MQBACF",7008):  "ORIGIN_UOW_ID", 
+ ("MQBACF",7037):  "PROPERTIES_DATA", 
  ("MQBACF",7009):  "Q_MGR_UOW_ID", 
+ ("MQBACF",7036):  "REQUEST_ID", 
  ("MQBACF",7004):  "RESPONSE_ID", 
  ("MQBACF",7003):  "RESPONSE_SET", 
  ("MQBACF",7032):  "SUB_CORREL_ID", 
@@ -10491,6 +10534,7 @@ selectTypeI= {
  ("MQIACF",1028):  "HANDLE_STATE", 
  ("MQIACF",1360):  "HOBJ", 
  ("MQIACF",1382):  "HSUB", 
+ ("MQIACF",1423):  "IGNORE_STATE", 
  ("MQIACF",1074):  "INQUIRY", 
  ("MQIACF",1393):  "INTATTR_COUNT", 
  ("MQIACF",1080):  "INTEGER_DATA", 
@@ -10512,6 +10556,7 @@ selectTypeI= {
  ("MQIACF",1290):  "MESSAGE_COUNT", 
  ("MQIACF",1008):  "MODE", 
  ("MQIACF",1258):  "MONITORING", 
+ ("MQIACF",1424):  "MOVABLE_APPL_COUNT", 
  ("MQIACF",1171):  "MOVE_COUNT", 
  ("MQIACF",1145):  "MOVE_TYPE", 
  ("MQIACF",1147):  "MOVE_TYPE_ADD", 
@@ -11684,7 +11729,9 @@ selectTypeS= {
   "MQSTS_STRUCT": ("MQBACF",7031),
   "MSG_ID": ("MQBACF",7013),
   "ORIGIN_UOW_ID": ("MQBACF",7008),
+  "PROPERTIES_DATA": ("MQBACF",7037),
   "Q_MGR_UOW_ID": ("MQBACF",7009),
+  "REQUEST_ID": ("MQBACF",7036),
   "RESPONSE_ID": ("MQBACF",7004),
   "RESPONSE_SET": ("MQBACF",7003),
   "SUB_CORREL_ID": ("MQBACF",7032),
@@ -11792,6 +11839,7 @@ selectTypeS= {
   "HANDLE_STATE": ("MQIACF",1028),
   "HOBJ": ("MQIACF",1360),
   "HSUB": ("MQIACF",1382),
+  "IGNORE_STATE": ("MQIACF",1423),
   "INQUIRY": ("MQIACF",1074),
   "INTATTR_COUNT": ("MQIACF",1393),
   "INTEGER_DATA": ("MQIACF",1080),
@@ -11813,6 +11861,7 @@ selectTypeS= {
   "MESSAGE_COUNT": ("MQIACF",1290),
   "MODE": ("MQIACF",1008),
   "MONITORING": ("MQIACF",1258),
+  "MOVABLE_APPL_COUNT": ("MQIACF",1424),
   "MOVE_COUNT": ("MQIACF",1171),
   "MOVE_TYPE": ("MQIACF",1145),
   "MOVE_TYPE_ADD": ("MQIACF",1147),
@@ -12985,7 +13034,9 @@ int_to_string= {
   7031: "MQSTS_STRUCT",
   7013: "MSG_ID",
   7008: "ORIGIN_UOW_ID",
+  7037: "PROPERTIES_DATA",
   7009: "Q_MGR_UOW_ID",
+  7036: "REQUEST_ID",
   7004: "RESPONSE_ID",
   7003: "RESPONSE_SET",
   7032: "SUB_CORREL_ID",
@@ -13093,6 +13144,7 @@ int_to_string= {
   1028: "HANDLE_STATE",
   1360: "HOBJ",
   1382: "HSUB",
+  1423: "IGNORE_STATE",
   1074: "INQUIRY",
   1393: "INTATTR_COUNT",
   1080: "INTEGER_DATA",
@@ -13114,6 +13166,7 @@ int_to_string= {
   1290: "MESSAGE_COUNT",
   1008: "MODE",
   1258: "MONITORING",
+  1424: "MOVABLE_APPL_COUNT",
   1171: "MOVE_COUNT",
   1145: "MOVE_TYPE",
   1147: "MOVE_TYPE_ADD",

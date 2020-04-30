@@ -6,11 +6,21 @@ import json
 
 import sys
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-qm',required=True,default="QMA")
+parser.add_argument('-channel', required=True, default="QMACLIENT")
+parser.add_argument('-conname', required=True, default='localhost(1415)')
+parser.add_argument('-queue', required=True, default='SYSTEM.ADMIN')
+#parser.add_argument('-userid', required=False, default='')
+#parser.add_argument('-password', required=False, default=None)
+args = parser.parse_args()
 
-queue_manager = 'QMA'
-channel = "QMACLIENT"
-conn_info = "127.0.0.1(1414)"
-queue_name = "CP*"
+
+queue_manager = args.qm
+channel = args.channel
+conn_info = args.conname
+queue_name = args.queue
 
 pcf = mqpcf.mqpcf()
 
@@ -44,7 +54,7 @@ hAdmin.put(message, md)
 # we now need to get the replies
 md = pymqi.MD()
 gmo = pymqi.GMO()
-gmo.Options = pymqi.CMQC.MQGMO_WAIT | pymqi.CMQC.MQGMO_FAIL_IF_QUIESCING
+gmo.Options = pymqi.CMQC.MQGMO_WAIT | pymqi.CMQC.MQGMO_FAIL_IF_QUIESCING | pymqi.CMQC.MQGMO_CONVERT
 gmo.WaitInterval = 1000 # 1 seconds
 
 try:
@@ -58,6 +68,7 @@ try:
         data = hReply.get(None,md, gmo )
         md.set(MsgId=b'') # clear this so we get rest of messages in group
         header, data = pcf.parse_data(buffer=data, strip="yes", debug=0)
+        print("header=",header)
         if (header["Reason"] != 0):
             mqpcf.eprint("Reason code:",pcf.header["sReason"])
             mqpcf.eprint("error return:",header)
