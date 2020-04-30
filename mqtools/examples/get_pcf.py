@@ -119,7 +119,7 @@ input_queue = pymqi.Queue(qmgr,od, input_open_options)
 md = pymqi.MD()
 gmo = pymqi.GMO()
 md = pymqi.MD()
-gmo.Options = pymqi.CMQC.MQGMO_WAIT | pymqi.CMQC.MQGMO_FAIL_IF_QUIESCING
+gmo.Options = pymqi.CMQC.MQGMO_WAIT | pymqi.CMQC.MQGMO_FAIL_IF_QUIESCING| pymqi.CMQC.MQGMO_CONVERT
 gmo.WaitInterval = args.wait * 1000 # 20  seconds
 start = ''
 try:
