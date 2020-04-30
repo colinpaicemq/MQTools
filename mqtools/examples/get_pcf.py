@@ -24,10 +24,13 @@ Disallow
 
 import pymqi
 import mqtools.mqpcf as MQPCF
+import datetime
 import json
 import argparse
 import sys
 import getpass
+import struct
+import string
 import mqtools.MQ as MQ # for formatMQMD
 
 valid_queues = ''.join(("Specify the queue to be processed.  System queues include:",
@@ -52,6 +55,8 @@ parser.add_argument('-userid', required=False, default=None)
 parser.add_argument('-password', required=False, default=None)
 parser.add_argument('-count', required=False, default=999999,type=int,
                     help="count of messages to process")
+parser.add_argument('-wait', required=False, default=5,type=int,
+                    help="MQGETWait time in seconds")
 parser.add_argument('-debug', required=False, default=0,type=int,
                     help="For internal debugging")
 args = parser.parse_args()
@@ -115,28 +120,105 @@ md = pymqi.MD()
 gmo = pymqi.GMO()
 md = pymqi.MD()
 gmo.Options = pymqi.CMQC.MQGMO_WAIT | pymqi.CMQC.MQGMO_FAIL_IF_QUIESCING
-gmo.WaitInterval = 1000 # 5 seconds
-
+gmo.WaitInterval = args.wait * 1000 # 20  seconds
+start = ''
 try:
     for i in range(args.count):
         md = pymqi.MD()
         rfh = []
-        msg = input_queue.get_rfh2(None, md, gmo,rfh )
+        mqpcf.resetMD(md=md)
+#       msg = input_queue.get_rfh2(None, md, gmo,rfh )
+        msg = input_queue.get_rfh2(None, md, gmo)
+        now = datetime.datetime.now()
+        if start == "":
+           start = now  
+        delta = now - start  
         #MQ.format(rfh)
         rfh2s = []
-        for buff in rfh:
-            newRFH2 = MQ.format(buff.get())
-            rfh2s.append(newRFH2)
+       
+       
         newMD = MQ.format_MQMD(md)
         if args.debug > 0:
             MQPCF.eprint("MQMD:",newMD )
-        header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug=args.debug)
-        ret= {"reason":header["sReason"],
-            "MQMD":newMD,
-            "header":header,
-            "RFH2":rfh2s,
-            "Data":data
-            }
+      
+        if newMD["Format"] == "MQADMIN":
+
+            if len(msg) < 36:
+               header = {"sReason":"Missing data"}
+               data = {}
+            else:
+                PCFheader, PCFdata =mqpcf.parse_data(buffer=msg, strip="yes", debug=args.debug)
+            ret= {"reason":PCFheader["sReason"],
+                "MQMD":newMD,
+                "PCFheader":PCFheader,
+                "PCFData":PCFdata,
+                "time":now.__str__(),
+                "delta":delta.__str__()
+                }
+
+        elif newMD["Format"] == "MQHEPCF":  # embedded PCF
+            if args.debug > 0:
+                MQPCF.eprint("MQHEPCF:",msg[0:4])
+            lData   = struct.unpack('i', msg[8:8+4])
+       
+            if args.debug > 0:
+                MQPCF.eprint("MQHEPCF length:",lData[0]," buffer length",len(msg))
+            msg     = msg[32:lData[0]]; # from ... offset 32 - to the end
+            if args.debug > 0:
+                MQPCF.eprint("MQHEPCF msg size now :",len(msg))
+
+            if len(msg) < 36:
+               header = {"sReason":"Missing data"}
+               data = {}
+            else: 
+                header, data =mqpcf.parse_data(buffer=msg, strip="yes", debug=args.debug)       
+            ret= {"reason":header["sReason"],
+                  "MQMD":newMD,
+                  "PCFheader":header,
+                  "PCFData":data,
+                  "time":now.__str__(),
+                  "delta":delta.__str__()
+                 }
+        elif newMD["Format"] == "MQSTR":  # embedded PCF
+             print("==============================",type(newMD["Format"]))
+             print(newMD)
+           #  print("problem with ",msg)
+             msg = msg.decode("UTF-8")
+             header = {"sReason":"????"}
+             data =  {"body":msg}
+             ret= {"reason":header["sReason"],
+                  "MQMD":newMD,
+                  "msg":msg,
+                  "time":now.__str__(),
+                  "delta":delta.__str__()
+                 }
+        else: 
+             print("==============================",type(newMD["Format"]))
+             print(newMD)
+             print("problem with ",msg)
+             printable_chars = set(bytes(string.printable, 'ascii'))
+
+             if isinstance(msg,bytes):
+                z = bytearray(msg)
+                # check to see if the whole string is printable 
+                printable = all(char in printable_chars for char in z)
+                if printable == True:
+                   msg =msg.decode() # convert to string
+                  
+                else:
+                   msg = "0x"+msg.hex() # convert it to hex
+            
+
+         
+            
+             data =  {"body":msg}
+             ret= {"sReason":"????",
+                  "MQMD":newMD,
+                  "msg":data,
+                  "time":now.__str__(),
+                  "delta":delta.__str__()
+                 }
+                 
    
         js = json.dumps(ret)
         print(js,flush=True) # needed so the next stage gets complete json

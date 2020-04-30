@@ -315,7 +315,7 @@ class mqpcfget(object):
         
         if printable == True:
                 value  =value.decode() # convert to string
-                if strip != "no":
+                if self.strip != "no":
                     value = value.rstrip(' \0')     
         else:
             value = "0x"+value.hex() # convert it to hex
@@ -485,8 +485,8 @@ class mqpcfget(object):
         Get the next 4 bytes from buffer(offsetData) and move the pointer
         """
         if self.data_offset + 4 > self.buffer_length:
-            print("_get4:", self.data_offset, self.buffer_length)
-            raise ValueError("MQPCF Trying to get past the end of the buffer")
+            print("_get4: offset", self.data_offset, self.buffer_length)
+            raise ValueError("MQPCF Trying to get past the end of the buffer. offset " + self.data_offset +" buffer length " + self.buffer_length )
         longi = struct.unpack('i', self.buffer[self.data_offset:self.data_offset + 4])
         self.data_offset = self.data_offset + 4
         # unpack always returns a tuple - so just get the first one
