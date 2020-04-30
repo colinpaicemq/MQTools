@@ -2,7 +2,7 @@
 # constants generated from IBM MQ Header files
 # Contact ColinPaiceMQ@GMAIL.COM
 # Generated on Thu May 23 20:23:58 2019
-#
+
 #
 sLookupTypes ={
   136:"MQMON" 
