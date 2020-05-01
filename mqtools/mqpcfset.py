@@ -21,7 +21,7 @@ class mqpcfset(object):
         self.buffer = b""
         self.buffer_length = 0
         self.struc_length = 0
-
+pip3 -v install git+http://github.com/colinpaicemq/MQTools/ 
     def create_request(self, request, *args):
         """
         Process the command and data
@@ -91,7 +91,7 @@ class mqpcfset(object):
                             , arg)
                     if self.debug > 0 :
                         print("mqpcfset typeit arg",arg,"type",typeit,"value",arg_value )    
-                    # Pass the type of data (MQIA, the code <for INQUIRE_Q> and value
+                    # Pass the type of data (MQIA, the mqcode <for INQUIRE_Q> and value
                     # we can have {QNAME,("EQ","CP*"} - a filter
                     #  or {"QNAME","CP*} - if so treat this as above and insert "EQ"
                     operator = 0
@@ -131,7 +131,7 @@ class mqpcfset(object):
                     else:
                         raise ValueError("Unknown data type:", typeit)
 
-                    #  val = self._set_request_data(typeit, code, arg_value)
+                    #  val = self._set_request_data(typeit, mqcode, arg_value)
                     if val is None:
                         raise ValueError("MQPCF command code not found ", each_arg, arg_value)
                     bparms = b''.join([bparms, val])

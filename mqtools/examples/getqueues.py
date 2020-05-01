@@ -70,7 +70,7 @@ try:
         header, data = pcf.parse_data(buffer=data, strip="yes", debug=0)
         print("header=",header)
         if (header["Reason"] != 0):
-            mqpcf.eprint("Reason code:",pcf.header["sReason"])
+            mqpcf.eprint("Reason mqcode:",pcf.header["sReason"])
             mqpcf.eprint("error return:",header)
             
         if header["Control"] == "LAST":

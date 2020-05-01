@@ -6,7 +6,7 @@
 
 
  DISCLAIMER
- You are free to use this mqcode in any way you like, subject to the
+ You are free to use this code in any way you like, subject to the
  Python & IBM disclaimers & copyrights. I make no representations
  about the suitability of this software for any purpose. It is
  provided "AS-IS" without warranty of any kind, either express or
@@ -16,8 +16,8 @@
 import struct
 import string
 import pymqi as pymqi
-import smqpcf as SMQPCF
-import mqpcf  as mqpcf
+from . import smqpcf as SMQPCF
+from . import mqpcf  as mqpcf
 from sys import stderr
 
 
@@ -80,7 +80,7 @@ class mqpcfget(object):
         header = self._parse_header()
         # dont print this out as reason - 2635 means change event!
         #if header['Reason'] != 0:
-        #    print("Return mqcode from request:", header['Reason'])
+        #    print("Return code from request:", header['Reason'])
     #      return header, ''
         if header["ParameterCount"] == 0:
             return header, ""
@@ -113,9 +113,9 @@ class mqpcfget(object):
         # Convert the integer values to text values
         header["Type"] = SMQPCF.sMQLOOKUP.get(("MQCFT", header["Type"]), header["Type"])
         header["Command"] = SMQPCF.sMQLOOKUP.get(("MQCMD", header["Command"]), header["Command"])
-        #-1 is special mqcode for MQCMDS
+        #-1 is special code for MQCMDS
         header["Control"] = SMQPCF.sMQLOOKUP.get(("MQCFC", header["Control"]), header["Control"])
-        #-2 is special mqcode for Control
+        #-2 is special code for Control
         header["CompCode"] = mqpcf.lookup_reason(header["CompCode"])
         header["sReason"] = SMQPCF.sMQLOOKUP.get(("MQRC", header["Reason"]), header["Reason"])
         self.structure_length = header['StrucLength']
