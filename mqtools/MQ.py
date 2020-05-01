@@ -1,6 +1,6 @@
 import mqtools.smqpcf as SMQPCF
-from   .mqcode   import formatMQMD  as mqmd
-from   .mqcode   import format  as fo2 
+from   . mqcode   import formatMQMD  as mqmd
+from   . mqcode   import format  as fo2 
 #import mqtools.mqcode.fromMQMD as mqmd
 
 # from mqcode import formatMQMD 	  as mqmd
