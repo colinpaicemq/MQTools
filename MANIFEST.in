@@ -2,7 +2,7 @@ include mqtools/*
 include mqtools/examples/*
 include mqtools/doc/*
 include mqtools/MQ/*
-include mqtools/code/*
+include mqtools/mqcode/*
 
 
 
