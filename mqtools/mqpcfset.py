@@ -21,7 +21,7 @@ class mqpcfset(object):
         self.buffer = b""
         self.buffer_length = 0
         self.struc_length = 0
-pip3 -v install git+http://github.com/colinpaicemq/MQTools/ 
+
     def create_request(self, request, *args):
         """
         Process the command and data
