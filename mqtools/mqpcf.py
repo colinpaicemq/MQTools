@@ -1,7 +1,7 @@
 import pymqi as pymqi
-from . import smqpcf as SMQPCF
-from . import mqpcfget as mqpcfget
-from . import mqpcfset as mqpcfset
+import smqpcf as SMQPCF
+import mqpcfget as mqpcfget
+import mqpcfset as mqpcfset
 from sys import stderr
 import string
 
