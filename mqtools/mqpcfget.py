@@ -16,8 +16,8 @@
 import struct
 import string
 import pymqi as pymqi
-from . import smqpcf as SMQPCF
-from . import mqpcf  as mqpcf
+from mqtools import smqpcf as SMQPCF
+from mqtools import mqpcf  as mqpcf
 from sys import stderr
 
 

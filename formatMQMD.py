@@ -1,4 +1,4 @@
-import mqtools.mqpcf.smpcf as SMQPCF
+import mqtools.mqpcf.smqpcf as SMQPCF
 import json
 import string
 

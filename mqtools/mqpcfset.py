@@ -1,6 +1,6 @@
 import struct
 import pymqi as pymqi
-from . import smqpcf as SMQPCF
+from mqtools import smqpcf as SMQPCF
 
 class mqpcfset(object):
     # class MQPCFSET(MQPCF.MQPCF):

@@ -87,7 +87,7 @@ try:
         md.set(MsgId=b'') # clear this so we get rest of messages in group
         header, data = pcf.parse_data(buffer=data, strip="yes", debug= 0)
         if (header["Reason"] != 0):
-            mqpcf.eprint("Reason code:",pcf.header["sReason"])
+            mqpcf.eprint("Reason mqcode:",pcf.header["sReason"])
             mqpcf.eprint("error return:",header)
             
         if header["Control"] == "LAST":

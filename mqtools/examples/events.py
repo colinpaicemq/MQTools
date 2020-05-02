@@ -85,7 +85,7 @@ try:
     #if (correlid1 != correlid2): print("Correlid do not match")
     #header2, data2 = mqpcf.parse_data(buffer=msg2,strip="yes",debug=0 )
     #if (header2["Reason"] != 0):
-    #   MQPCF.eprint("Reason code:",header2["sReason"])
+    #   MQPCF.eprint("Reason mqcode:",header2["sReason"])
     #   MQPCF.eprint("error return:",header2)    
  #  # l = list(data1)
  #   print("L",l[0],l)
