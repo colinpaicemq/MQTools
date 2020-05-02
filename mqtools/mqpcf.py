@@ -3,7 +3,7 @@ from . import smqpcf as SMQPCF
 from . import mqpcfget as mqpcfget
 from . import mqpcfset as mqpcfset
 from sys import stderr
-import string
+# import string
 
 def eprint(*args, **kwargs):
     print(*args, file=stderr, **kwargs)
