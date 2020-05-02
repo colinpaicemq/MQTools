@@ -1,12 +1,14 @@
+
 import pymqi
 import mqtools.mqpcf as mqpcf
-import mqtools.MQ as MQ # for formatMQMD
+
+# import sys
+
+from mqtools import MQ as MQ  # for formatMQMD
 #import formatMQMD as formatMQMD
 import json
-
-import sys
-
 import argparse
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-qm',required=True,default="QMA")
 parser.add_argument('-channel', required=True, default="QMACLIENT")
@@ -92,5 +94,4 @@ except pymqi.MQMIError as e:
 
 hAdmin.close()
 hReply.close()
- 
 qmgr.disconnect()
