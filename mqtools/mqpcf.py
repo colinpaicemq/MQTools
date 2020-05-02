@@ -1,7 +1,7 @@
 import pymqi as pymqi
-from . import smqpcf as SMQPCF
-from . import mqpcfget as mqpcfget
-from . import mqpcfset as mqpcfset
+from mqtools import smqpcf as SMQPCF
+from mqtools import mqpcfget as mqpcfget
+from mqtools import mqpcfset as mqpcfset
 from sys import stderr
 # import string
 
@@ -118,7 +118,21 @@ class mqpcf(object):
         #    md.Format = pymqi.CMQC.MQFMT_ADMIN
         #   return md
     
+    def create_admin_MD_CMD(self,replyToQ=None):
+        """
+        Create an MQ for reply to queue, and fillin the replyto queue
+        """
+                   
+        md = pymqi.MD() # create an MD
+        if replyToQ is None:
+            raise ValueError("You must specify the replyToQ")
 
+        # and fill in the fields
+        md.ReplyToQ = replyToQ
+        md.MsgType = pymqi.CMQC.MQMT_REQUEST
+        md.Feedback = pymqi.CMQC.MQFB_NONE
+        md.Format = pymqi.CMQC.MQFMT_STRING
+        return md
         
     def create_admin_MD(self,hReplyToQ=None):
         """
