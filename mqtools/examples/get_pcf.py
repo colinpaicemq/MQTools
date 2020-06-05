@@ -20,6 +20,8 @@ pymqi.MQMIError: MQI Error. Comp: 2, Reason 2058: FAILED: MQRC_Q_MGR_NAME_ERROR
 as pymqi has been build with client libraries
 Disallow 
 
+Changed to allow get with rfh2 header
+
 """
 
 import pymqi
