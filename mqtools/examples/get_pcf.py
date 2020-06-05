@@ -184,7 +184,7 @@ try:
                   "time":now.__str__(),
                   "delta":delta.__str__()
                  }
-        elif newMD["Format"] == "MQHRF2":  # embedded PCF
+        elif newMD["Format"] == "MQHRF2":  
             if args.debug > 0:
                 MQPCF.eprint("MQRFH2:",msg[0:4])
            
@@ -196,19 +196,19 @@ try:
             format = msg[20:27].decode("utf-8")
             rfhOutput=""
             pad = ""
-            pFolder = 36 # past the header 
+            pFolder = 36 # past the RFH2 header to the <length><data...><length><data>  
             while pFolder < lRFH[0]:
                 lFolder   = struct.unpack('i', msg[pFolder:pFolder+4]) 
                 pName = pFolder + 4 # past the length field     
                 folder = msg[pName: pName+lFolder[0]-1]  .decode("utf-8")
-                print(folder+'.')
                 rfhOutput+=pad+folder
                 # note the folder content can have a blank on the end... or not
                 pad=", "
                 pFolder = pFolder + 4 + lFolder[0] # get to any next one
             if format == "MQPCF  ":
                 msg = msg[lRFH[0]:]
-                admin()   
+                admin() 
+                # use the ret structure from the pcf data and add the rfh2 data  
                 ret["rfh2"] = rfhOutput 
      
         elif newMD["Format"] == "MQSTR":  # embedded PCF
