@@ -196,7 +196,12 @@ class mqpcfget(object):
             #    elif section_type == pymqi.CMQCFC.MQCFT_GROUP:
             #    data, value, longdata = self._get_group()
             # elif section_type == pymqi.CMQCFC.MQCFT_INTEGER6
-            returned[data] = value
+            if data == "Q_STATISTICS_DATA":
+                if not data in returned:
+                    returned[data] = {}
+                returned[data][value['Q_NAME']] = value
+            else:
+                returned[data] = value
             self.all_data.append(longdata)
             if self.debug > 5 :
                 print(">>mqpcfget: 202 moveto type:", section_type,"length:", self.structure_length,
