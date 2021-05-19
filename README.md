@@ -193,16 +193,19 @@ You can create a PCF message and then use pymqi to put it to the
 SYSTEM.ADMIN.COMMAND.QUEUE for example
 
 ```
-  message=pcfset.request(  "INQUIRE_CHLAUTH_RECS" 
+  from mqtools import mqpcfset as mqpcfset
+  pcfset = mqpcfset.mqpcfset()
+  message=pcfset.create_request(  "INQUIRE_CHLAUTH_RECS" 
                           ,{"CHANNEL_NAME":"*"}                 
                         )
 ```
 or
 ```
-  message=pcfset.request("INQUIRE_Q_STATUS"
+  from mqtools import mqpcfset as mqpcfset
+  pcfset = mqpcfset.mqpcfset()
+  message=pcfset.create_request("INQUIRE_Q_STATUS"
                          ,{"Q_NAME":"AMQ*"}
                          ,{"CURRENT_Q_DEPTH":("EQ",0)}
-                         ,{"OPEN_TYPE":"INPUT"}                  
                         )
 ```
 
